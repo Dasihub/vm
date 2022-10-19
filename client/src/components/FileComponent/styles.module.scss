@@ -1,0 +1,75 @@
+$theme: #454cad;
+$dark-text: #5f6982;
+
+.label {
+    width: 100%;
+    text-align: center;
+    background: #fff;
+    transition: all .2s ease;
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.start {
+    width: 100%;
+}
+
+.fileImage {
+    display: inline;
+    width: auto;
+    height: auto;
+    max-width: 180px;
+
+    &.hidden {
+        display: none;
+    }
+}
+
+.notimage {
+    display: block;
+    float: left;
+    clear: both;
+    width: 100%;
+
+    &.hidden {
+        display: none;
+    }
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.btn {
+    display: inline-block;
+    clear: both;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    text-transform: initial;
+    border: none;
+    border-radius: .2rem;
+    outline: none;
+    padding: 0 1rem;
+    height: 36px;
+    line-height: 36px;
+    margin-top: 20px;
+    transition: all 0.2s ease-in-out;
+    box-sizing: border-box;
+    background-color: #2684ff;
+    color: white;
+    cursor: pointer;
+}
+
+.line {
+    border-radius: 4px;
+    border: 2px solid hsl(0, 0%, 87%);
+    padding: 10px;
+
+    &:hover {
+        border: 2px solid hsl(0, 0%, 34%);
+    }
+}

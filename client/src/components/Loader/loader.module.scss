@@ -1,0 +1,19 @@
+.spinner {
+    width: 40px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 5px solid #eaeaea;
+    border-right-color: #2684ff;
+    animation: s2 1s infinite linear;
+}
+
+.spinnerSm {
+    width: 25px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 3px solid #eaeaea;
+    border-right-color: #7eb8ff;
+    animation: s2 1s infinite linear;
+}
+
+@keyframes s2 {to{transform: rotate(1turn)}}

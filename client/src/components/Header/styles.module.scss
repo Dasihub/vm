@@ -1,0 +1,36 @@
+.flag {
+    position: fixed;
+    right: 50px;
+    top: 5px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 10px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    overflow-y: hidden;
+    user-select: none;
+    transition: 0.5s;
+    height: 50px;
+
+    &:hover {
+        height: 126px;
+    }
+
+    img {
+        width: 40px;
+        height: 23px;
+        object-fit: cover;
+        cursor: pointer;
+    }
+}
+
+.items {
+    padding: 3px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}

@@ -1,0 +1,32 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
+  "extends": [ "eslint:recommended", "plugin:react/recommended", "prettier" ],
+  "overrides": [
+    {
+      "files": [ "src/**/*.ts", "src/**/*.tsx" ]
+    }
+  ],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "parser": "@babel/eslint-parser"
+  },
+  "plugins": [ "react" ],
+  "rules": {
+    "indent": [ "error", 4, { "SwitchCase": 1 } ],
+    "react/jsx-indent": [ "error", 4 ],
+    "react/jsx-indent-props": [ "error", 4 ],
+//    "quotes": [ "error", "single" ],
+//    "semi": [ "error", "always" ],
+    "react/prop-types": 0,
+    "no-var": 2,
+    "object-curly-spacing": [ "error", "always" ],
+    "no-useless-return": "error",
+    "no-unused-vars": "off"
+  }
+}
