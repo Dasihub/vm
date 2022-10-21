@@ -334,8 +334,9 @@ const TeacherPage: React.FC = () => {
                     <table className="table">
                         <thead className="bg-light">
                             <tr>
-                                <th>№</th>
-                                <th>ФИО</th>
+                                <th className="th">№</th>
+                                <th className="th">ФИО</th>
+                                <th className="th">Оценка</th>
                             </tr>
                         </thead>
                         <tbody>

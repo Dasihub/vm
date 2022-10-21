@@ -6,6 +6,7 @@
 
 body {
     font-family: 'Montserrat', sans-serif;
+    //background-color: #ececec;
 }
 
 a {
@@ -197,6 +198,10 @@ a {
     background-color: white;
 }
 
+.bg-color-ec {
+    background-color: #ececec;
+}
+
 .border-radius {
     border-radius: 4px;
 }
@@ -226,18 +231,17 @@ a {
 .overflow-auto {
     overflow: auto;
 }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
 
 
 .table {
     width: 100%;
     margin-bottom: 1rem;
-    color: hsl(0, 0%, 20%);
     vertical-align: top;
     border-color: #f1f1f1
-}
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
 }
 
 .table > :not(caption) > * > * {
@@ -246,12 +250,14 @@ input::-webkit-inner-spin-button {
     //border-bottom-width: 1px;
 }
 .table {
+    //border-collapse: collapse;
+
     thead {
         position: sticky;
         top: 2px;
         z-index: 1;
 
-        th {
+        .th {
             background-color: #ececec;
             //border-bottom: 2px solid #dee2e6;
             font-size: 15px;
@@ -259,6 +265,13 @@ input::-webkit-inner-spin-button {
     }
 
     tbody {
+
+        .th {
+            background-color: #ececec;
+            //border-bottom: 2px solid #dee2e6;
+            font-size: 15px;
+        }
+
         td {
             border-bottom: 1px solid #dee2e6;
         }

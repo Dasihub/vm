@@ -1,5 +1,5 @@
 {
-  "name": "AVN_33",
+  "name": "server",
   "version": "1.1.0",
   "description": "",
   "main": "bin/www",

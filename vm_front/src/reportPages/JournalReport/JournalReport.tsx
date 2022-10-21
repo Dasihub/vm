@@ -217,7 +217,7 @@ const JournalReport: React.FC<IJournalReportProps> = ({
                             Вид занятий:{' '}
                             <strong>{vidZanyatie.map(item => (item.id_vid_zaniatiy === idVidZanyatie ? item.name_vid_zaniatiy : null))}</strong>
                         </div>
-                        <div className="mt-4 m-l-r-2">
+                        <div className="mt-4 m-l-r-2 overflow-auto">
                             <table className="table">
                                 <tbody>
                                     {report.map((item: any, index: number) => {
@@ -235,8 +235,7 @@ const JournalReport: React.FC<IJournalReportProps> = ({
                                                                         fieldNames == 'name'
                                                                             ? { textAlign: 'left', paddingLeft: '10px' }
                                                                             : { textAlign: 'center' }
-                                                                    }
-                                                                >
+                                                                    }>
                                                                     {item[fieldNames] ? item[fieldNames] : '-'}
                                                                 </td>
                                                             ))}

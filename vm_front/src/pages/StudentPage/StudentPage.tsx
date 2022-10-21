@@ -4,6 +4,10 @@ import { useTypeSelector } from '../../hooks/useTypeSelector'
 import { IDiscipline, IJournal, ILoader, ISemester, ITeacher, IValueSelect } from './IStudent'
 import { valueType } from '../../components/SelectCustom/ISelect'
 import { useHttp } from '../../hooks/useHttp'
+import { useGroupBy } from '../../hooks/useGroupBy'
+import dayjs from 'dayjs'
+import styles from './styles.module.scss'
+import { JournalStudent } from '../../ui'
 
 const StudentPage: React.FC = () => {
     const { request } = useHttp()
@@ -16,6 +20,8 @@ const StudentPage: React.FC = () => {
     const [semester, setSemester] = React.useState<ISemester[]>([])
     const [teachers, setTeachers] = React.useState<ITeacher[]>([])
     const [journal, setJournal] = React.useState<IJournal[]>([])
+    const [data, setData] = React.useState<any>()
+    const [dataMax, setDataMax] = React.useState<any>()
     const [loader, setLoader] = React.useState<ILoader>({
         discipline: false,
         semester: false,
@@ -29,6 +35,10 @@ const StudentPage: React.FC = () => {
         v_teacher: { value: null, label: '' }
     })
 
+    const visitDateGrouped = useGroupBy(journal, 'visitDate')
+
+    const shotNameGrouped = useGroupBy(journal, 'short_name')
+
     const changeYear = (v: valueType) => {
         setValueSelects({ ...valueSelects, v_year: v })
     }
@@ -39,9 +49,11 @@ const StudentPage: React.FC = () => {
     }
 
     const changeDiscipline = (v: valueType) => {
-        const one = disciplines.find(item => item.id_discipline === v.value)
-        setDiscipline(one)
-        getSemester(v.value)
+        // const [id_discipline, credits, isSelect] = String(v.value).split('_')
+        const a = disciplines.find(item => item.num == v.value)
+        console.log(a, 'a')
+        setDiscipline(a)
+        getSemester(a?.id_discipline)
     }
 
     const changeSemester = (v: valueType) => {
@@ -56,12 +68,17 @@ const StudentPage: React.FC = () => {
 
     const getDiscipline = async (ws: null | number | string) => {
         setLoader({ ...loader, discipline: true })
-        const { data } = await request(`/student/discipline/?id_year=${v_year.value}&id_ws=${ws}&id_group=${7175}&id_student=${59527}&lang=${lang}`)
-        setDisciplines(data)
+        const { data }: { data: IDiscipline[] } = await request(
+            `/student/discipline/?id_year=${v_year.value}&id_ws=${ws}&id_group=${7175}&id_student=${59527}&lang=${lang}`
+        )
+        const a = data.map((item, index) => {
+            return { ...item, num: index }
+        })
+        setDisciplines(a)
         setLoader({ ...loader, discipline: false })
     }
 
-    const getSemester = async (id_discipline: null | number | string) => {
+    const getSemester = async (id_discipline: number | string | undefined) => {
         setLoader({ ...loader, semester: true })
         const { data } = await request(
             `/student/semester/?id_year=${v_year.value}&id_ws=${
@@ -92,6 +109,35 @@ const StudentPage: React.FC = () => {
         )
         setJournal(data)
         setLoader({ ...loader, journal: false })
+
+        const shotNameGroupedNew = useGroupBy(data, 'short_name')
+
+        // const obj
+        Object.keys(shotNameGroupedNew).forEach((keyVid, indexVid) => {
+            const groupedDate = useGroupBy(shotNameGroupedNew[keyVid], 'visitDate')
+            shotNameGroupedNew[keyVid] = groupedDate
+            Object.keys(groupedDate).forEach((keyDate, indexDate) => {
+                const groupedTimes = useGroupBy(shotNameGroupedNew[keyVid][keyDate], 'timesCount')
+                shotNameGroupedNew[keyVid][keyDate] = groupedTimes
+            })
+        })
+
+        // max occured item for vid
+        let max: any = {}
+        Object.keys(shotNameGroupedNew).forEach(name => {
+            max[name] = 0
+        })
+
+        data.forEach((item: any) => {
+            if (item.timesCount > max[item.short_name]) {
+                max[item.short_name] = item.timesCount
+            }
+        })
+
+        console.log({ shotNameGroupedNew, max })
+
+        setData(shotNameGroupedNew)
+        setDataMax(max)
     }
 
     React.useEffect(() => {
@@ -130,15 +176,22 @@ const StudentPage: React.FC = () => {
                     <SelectCustom
                         placeholder="Дисциплина"
                         label="Дисциплина"
-                        value={discipline?.id_discipline ? { value: discipline?.id_discipline, label: discipline?.discipline } : ''}
-                        options={disciplines.map(item => ({ value: item.id_discipline, label: item.discipline }))}
+                        value={
+                            discipline?.id_discipline
+                                ? {
+                                      value: discipline?.num,
+                                      label: discipline?.discipline
+                                  }
+                                : ''
+                        }
+                        options={disciplines.map(item => ({ value: item.num, label: item.discipline }))}
                         loader={loader.discipline}
                         onChange={changeDiscipline}
                         isDisabled={!v_ws.value}
                     />
                 </div>
             </div>
-            <div className="flex justify-content-between gap-2">
+            <div className="flex justify-content-between gap-2 mt-2">
                 <div className="w-100">
                     <SelectCustom
                         placeholder="Семестр"
@@ -167,25 +220,7 @@ const StudentPage: React.FC = () => {
                     <Loader />
                 </div>
             ) : journal.length ? (
-                <div className="overflow-auto mt-4" style={{ maxHeight: '900px', minHeight: '400px' }}>
-                    <table className="table">
-                        <thead className="bg-light">
-                            <tr>
-                                <th>№</th>
-                                <th>ФИО</th>
-                                <th style={{ width: '200px' }}>Оценка</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {journal.map((item, index) => (
-                                <tr>
-                                    <td>{index + 1}</td>
-                                    <td>{item.id_studentJournalVisit}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                <JournalStudent data={data} dataMax={dataMax} visitDateGrouped={visitDateGrouped} />
             ) : null}
         </>
     )

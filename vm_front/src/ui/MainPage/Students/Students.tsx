@@ -21,12 +21,16 @@ const Students: React.FC<IStudentsProps> = ({ students, showModal }) => {
             <table className="table">
                 <thead className="bg-light" style={{ position: 'sticky', top: '2px' }}>
                     <tr style={{ fontSize: '14px' }}>
-                        <th rowSpan={2}>№</th>
-                        <th rowSpan={2}>Студент</th>
+                        <th className="th" rowSpan={2}>
+                            №
+                        </th>
+                        <th className="th" rowSpan={2}>
+                            Студент
+                        </th>
                         {Object.keys(educGrouped)
                             .sort()
                             .map(idDiscipline => (
-                                <th rowSpan={1} colSpan={Object.keys(educGrouped[idDiscipline]).length} key={'disc' + idDiscipline}>
+                                <th className="th" rowSpan={1} colSpan={Object.keys(educGrouped[idDiscipline]).length} key={'disc' + idDiscipline}>
                                     {educGrouped[idDiscipline][Object.keys(educGrouped[idDiscipline])[0]][0].discipline}
                                     <div style={{ fontSize: '14px' }}>
                                         {educGrouped[idDiscipline][Object.keys(educGrouped[idDiscipline])[0]][0].t_fio}
@@ -70,8 +74,7 @@ const Students: React.FC<IStudentsProps> = ({ students, showModal }) => {
                                                             educGrouped[idDiscipline][idDate].find((x: any) => x.s_fio == idStudent)?.id_otsenka == 6
                                                                 ? 'text-center bg-color-danger pointer color-light'
                                                                 : 'text-center'
-                                                        }
-                                                    >
+                                                        }>
                                                         {educGrouped[idDiscipline][idDate].find((x: any) => x.s_fio == idStudent)?.otsenka}
                                                     </td>
                                                 ))

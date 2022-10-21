@@ -20,6 +20,7 @@ export interface IDiscipline {
     discipline: string
     isSelect: number | boolean
     credits: number
+    num: number
 }
 
 export interface ISemester {
@@ -34,8 +35,11 @@ export interface ITeacher {
 
 export interface IJournal {
     id_studentJournalVisit: string
-    id_discipline: number
-    credits: number
-    isSelect: number
-    discipline: string
+    visitDate: string
+    id_vid_zaniatiy: number
+    short_name: string
+    timesCount: number
+    id_educ_sh: number
+    id_otsenka: number
+    otsenka: string
 }
