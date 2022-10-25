@@ -64,27 +64,27 @@ const MainPage: React.FC = () => {
         if (students.length) {
             setStudents([])
         }
-        // if (semester.length) {
-        //     setSemester([])
-        // }
-        // if (faculties.length) {
-        //     setFaculties([])
-        // }
-        // if (feduc.length) {
-        //     setFeduc([])
-        // }
-        // if (direction.length) {
-        //     setDirection([])
-        // }
-        // if (specialities.length) {
-        //     setSpecialities([])
-        // }
-        // if (groups.length) {
-        //     setGroups([])
-        // }
-        // if (vidZanyatie.length) {
-        //     setVidZanyatie([])
-        // }
+        if (semester.length) {
+            setSemester([])
+        }
+        if (faculties.length) {
+            setFaculties([])
+        }
+        if (feduc.length) {
+            setFeduc([])
+        }
+        if (direction.length) {
+            setDirection([])
+        }
+        if (specialities.length) {
+            setSpecialities([])
+        }
+        if (groups.length) {
+            setGroups([])
+        }
+        if (vidZanyatie.length) {
+            setVidZanyatie([])
+        }
     }
 
     const changeWs = (v: valueType) => {
@@ -100,31 +100,31 @@ const MainPage: React.FC = () => {
             v_vid_zanyatie: { value: null, label: '' },
             v_date: dayjs(new Date()).format('YYYY-MM-DD')
         })
-        // if (semester.length) {
-        //     setSemester([])
-        // }
+        if (semester.length) {
+            setSemester([])
+        }
         if (students.length) {
             setStudents([])
         }
         getSemester(v.value)
-        // if (faculties.length) {
-        //     setFaculties([])
-        // }
-        // if (feduc.length) {
-        //     setFeduc([])
-        // }
-        // if (direction.length) {
-        //     setDirection([])
-        // }
-        // if (specialities.length) {
-        //     setSpecialities([])
-        // }
-        // if (groups.length) {
-        //     setGroups([])
-        // }
-        // if (vidZanyatie.length) {
-        //     setVidZanyatie([])
-        // }
+        if (faculties.length) {
+            setFaculties([])
+        }
+        if (feduc.length) {
+            setFeduc([])
+        }
+        if (direction.length) {
+            setDirection([])
+        }
+        if (specialities.length) {
+            setSpecialities([])
+        }
+        if (groups.length) {
+            setGroups([])
+        }
+        if (vidZanyatie.length) {
+            setVidZanyatie([])
+        }
     }
 
     const changeSemester = (v: valueType) => {
@@ -139,28 +139,28 @@ const MainPage: React.FC = () => {
             v_vid_zanyatie: { value: null, label: '' },
             v_date: dayjs(new Date()).format('YYYY-MM-DD')
         })
-        // if (faculties.length) {
-        //     setFaculties([])
-        // }
+        if (faculties.length) {
+            setFaculties([])
+        }
         if (students.length) {
             setStudents([])
         }
         getFaculties()
-        // if (feduc.length) {
-        //     setFeduc([])
-        // }
-        // if (direction.length) {
-        //     setDirection([])
-        // }
-        // if (specialities.length) {
-        //     setSpecialities([])
-        // }
-        // if (groups.length) {
-        //     setGroups([])
-        // }
-        // if (vidZanyatie.length) {
-        //     setVidZanyatie([])
-        // }
+        if (feduc.length) {
+            setFeduc([])
+        }
+        if (direction.length) {
+            setDirection([])
+        }
+        if (specialities.length) {
+            setSpecialities([])
+        }
+        if (groups.length) {
+            setGroups([])
+        }
+        if (vidZanyatie.length) {
+            setVidZanyatie([])
+        }
     }
 
     const changeFaculties = (v: valueType) => {
@@ -174,25 +174,25 @@ const MainPage: React.FC = () => {
             v_vid_zanyatie: { value: null, label: '' },
             v_date: dayjs(new Date()).format('YYYY-MM-DD')
         })
-        // if (feduc.length) {
-        //     setFeduc([])
-        // }
+        if (feduc.length) {
+            setFeduc([])
+        }
         if (students.length) {
             setStudents([])
         }
         getFeduc(v.value)
-        // if (direction.length) {
-        //     setDirection([])
-        // }
-        // if (specialities.length) {
-        //     setSpecialities([])
-        // }
-        // if (groups.length) {
-        //     setGroups([])
-        // }
-        // if (vidZanyatie.length) {
-        //     setVidZanyatie([])
-        // }
+        if (direction.length) {
+            setDirection([])
+        }
+        if (specialities.length) {
+            setSpecialities([])
+        }
+        if (groups.length) {
+            setGroups([])
+        }
+        if (vidZanyatie.length) {
+            setVidZanyatie([])
+        }
     }
 
     const changeFeduc = (v: valueType) => {
@@ -205,22 +205,22 @@ const MainPage: React.FC = () => {
             v_vid_zanyatie: { value: null, label: '' },
             v_date: dayjs(new Date()).format('YYYY-MM-DD')
         })
-        // if (direction.length) {
-        //     setDirection([])
-        // }
+        if (direction.length) {
+            setDirection([])
+        }
         if (students.length) {
             setStudents([])
         }
         getDirection(v.value)
-        // if (specialities.length) {
-        //     setSpecialities([])
-        // }
-        // if (groups.length) {
-        //     setGroups([])
-        // }
-        // if (vidZanyatie.length) {
-        //     setVidZanyatie([])
-        // }
+        if (specialities.length) {
+            setSpecialities([])
+        }
+        if (groups.length) {
+            setGroups([])
+        }
+        if (vidZanyatie.length) {
+            setVidZanyatie([])
+        }
     }
 
     const changeDirection = async (v: valueType) => {
@@ -232,19 +232,19 @@ const MainPage: React.FC = () => {
             v_vid_zanyatie: { value: null, label: '' },
             v_date: dayjs(new Date()).format('YYYY-MM-DD')
         })
-        // if (specialities.length) {
-        //     setSpecialities([])
-        // }
+        if (specialities.length) {
+            setSpecialities([])
+        }
         if (students.length) {
             setStudents([])
         }
         getSpecialities(v.value)
-        // if (groups.length) {
-        //     setGroups([])
-        // }
-        // if (vidZanyatie.length) {
-        //     setVidZanyatie([])
-        // }
+        if (groups.length) {
+            setGroups([])
+        }
+        if (vidZanyatie.length) {
+            setVidZanyatie([])
+        }
     }
 
     const changeSpeciality = async (v: valueType) => {
@@ -255,23 +255,23 @@ const MainPage: React.FC = () => {
             v_vid_zanyatie: { value: null, label: '' },
             v_date: dayjs(new Date()).format('YYYY-MM-DD')
         })
-        // if (groups.length) {
-        //     setGroups([])
-        // }
+        if (groups.length) {
+            setGroups([])
+        }
         if (students.length) {
             setStudents([])
         }
         getGroup(v.value)
-        // if (vidZanyatie.length) {
-        //     setVidZanyatie([])
-        // }
+        if (vidZanyatie.length) {
+            setVidZanyatie([])
+        }
     }
 
     const changeGroup = (v: valueType) => {
         setValueSelects({ ...valueSelects, v_group: v })
-        // if (vidZanyatie.length) {
-        //     setVidZanyatie([])
-        // }
+        if (vidZanyatie.length) {
+            setVidZanyatie([])
+        }
         if (students.length) {
             setStudents([])
         }

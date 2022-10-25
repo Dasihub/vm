@@ -1,3 +1,4 @@
 export interface IHeaderProps {
-    auth: boolean
+    isNavigation: boolean
+    changeMenu: () => void
 }

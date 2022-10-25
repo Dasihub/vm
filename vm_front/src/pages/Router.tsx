@@ -17,8 +17,8 @@ const Load = (
 const Router: React.FC<{ auth: boolean }> = ({ auth }) => {
     if (auth) {
         return (
-            <div style={{ marginLeft: '240px' }}>
-                <div style={{ marginTop: '60px', borderRadius: '4px' }} className="block m-auto p-4 min-vh-100">
+            <div className="main_container">
+                <div style={{ marginTop: '60px', borderRadius: '4px' }} className=" min-vh-100 w-100">
                     <Routes>
                         <Route path="/main" element={<MainPage />} />
                         <Route
@@ -58,4 +58,4 @@ const Router: React.FC<{ auth: boolean }> = ({ auth }) => {
     )
 }
 
-export default Router
+export default React.memo(Router)

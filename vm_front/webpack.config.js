@@ -1,13 +1,13 @@
 const path = require('path')
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const {CleanWebpackPlugin} = require("clean-webpack-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 module.exports = {
     mode: 'production',
     entry: ['@babel/polyfill', path.resolve(__dirname, 'src/index.tsx')],
     output: {
-        filename: "js/vm.js",
+        filename: 'js/vm.js',
         path: path.resolve(__dirname, 'dist')
     },
     devtool: process.env.NODE_ENV === 'development' ? 'source-map' : false,
@@ -26,7 +26,7 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, 'public/index.html'),
-            filename: "index.html"
+            filename: 'index.html'
         }),
         new MiniCssExtractPlugin({
             filename: 'css/style.css'
@@ -53,7 +53,7 @@ module.exports = {
                 test: /\.(pdf|png|jpeg|jpg|svg)$/,
                 use: [
                     {
-                        loader: 'file-loader',
+                        loader: 'file-loader'
                         // options: {
                         //     name: '/assets/[name].[ext]'
                         // }

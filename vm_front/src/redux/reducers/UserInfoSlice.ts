@@ -15,7 +15,6 @@ const UserInfoSlice = createSlice({
     reducers: {},
     extraReducers: {
         [fetchUserInfo.fulfilled.type]: (state: IUser, action: PayloadAction<IUser>) => {
-            console.log(action, 'action')
             state.patronymic = action.payload.patronymic
             state.AVN_login = action.payload.AVN_login
             state.surname = action.payload.surname

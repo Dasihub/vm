@@ -18,6 +18,7 @@ const App: React.FC = () => {
     const dispatch = useTypeDispatch()
     const toast = useMessage()
     const { request, loaderDefaultTrue } = useHttp()
+    const [isNavigation, setIsNavigation] = React.useState<boolean>(false)
 
     const checkAuth = async () => {
         const { message, type, auth, data }: IResAuth = await request('/auth/check')
@@ -68,11 +69,15 @@ const App: React.FC = () => {
         )
     }
 
+    const changeMenu = () => {
+        setIsNavigation(!isNavigation)
+    }
+
     return (
         <>
             <ToastContainer />
-            <Header auth={isAuth} />
-            {isAuth && <Navigation />}
+            <Header changeMenu={changeMenu} isNavigation={isNavigation} />
+            {isAuth && <Navigation changeMenu={changeMenu} isNavigation={isNavigation} />}
             {/*<div style={{ width: '240px' }} />*/}
             <Router auth={isAuth} />
         </>

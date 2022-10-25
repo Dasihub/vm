@@ -2,10 +2,9 @@
     display: flex;
     justify-content: space-between;
     gap: 20px;
-}
+    margin-top: 20px;
 
-@media (max-width: 1000px) {
-    .container {
-        flex-wrap: wrap;
+    &:first-child {
+        margin-top: 0;
     }
 }

@@ -13,16 +13,16 @@ const JournalStudent: React.FC<IJournalStudentProps> = ({ visitDateGrouped, data
                             №
                         </th>
                         <th className="th" rowSpan={2}>
-                            Вид занятие
+                            Дата
                         </th>
                         <th className="th" colSpan={Object.keys(visitDateGrouped).length}>
-                            Дата
+                            Вид занятие
                         </th>
                     </tr>
                     <tr>
                         {Object.keys(visitDateGrouped).map((item, index) => (
                             <th className="th" key={index}>
-                                {dayjs(item).format('DD-MM-YYYY')}
+                                {item}
                             </th>
                         ))}
                     </tr>
@@ -34,16 +34,16 @@ const JournalStudent: React.FC<IJournalStudentProps> = ({ visitDateGrouped, data
                                 <td className="text-center" rowSpan={dataMax[itemData]}>
                                     {index + 1}
                                 </td>
-                                <td className="text-center" rowSpan={dataMax[itemData]}>
-                                    {itemData}
+                                <td style={{ width: '200px' }} className="text-center" rowSpan={dataMax[itemData]}>
+                                    {dayjs(itemData).format('DD-MM-YYYY')}
                                 </td>
                                 {Object.keys(visitDateGrouped).map((itemVisitDate, indexVisitDate) => {
                                     return (
-                                        <td rowSpan={dataMax[itemData]}>
+                                        <td key={indexVisitDate} rowSpan={dataMax[itemData]}>
                                             {Array.from(Array(dataMax[itemData]).keys()).map((itemTimesCount, indexTimesCount) => {
                                                 if (!!data[itemData][itemVisitDate]) {
                                                     return (
-                                                        <div className="text-center">
+                                                        <div key={indexTimesCount} className="text-center">
                                                             {data[itemData][itemVisitDate][indexTimesCount + 1]?.length &&
                                                             data[itemData][itemVisitDate][indexTimesCount + 1][0]?.timesCount
                                                                 ? data[itemData][itemVisitDate][indexTimesCount + 1][0]?.otsenka || ' присут '
@@ -52,13 +52,13 @@ const JournalStudent: React.FC<IJournalStudentProps> = ({ visitDateGrouped, data
                                                     )
                                                 } else {
                                                     return (
-                                                        <div className="text-center">
+                                                        <div key={indexTimesCount} style={{ height: '34px' }} className="text-center">
                                                             {/*{indexTimesCount == 0 && (*/}
                                                             {/*    <td style={{ visibility: 'hidden' }} rowSpan={dataMax[itemData]}>*/}
                                                             {/*        nodeata*/}
                                                             {/*    </td>*/}
                                                             {/*)}*/}
-                                                            <i style={{ fontSize: '20px' }} className="fa-solid fa-xmark" />
+                                                            {/*<i style={{ fontSize: '20px' }} className="fa-solid fa-xmark" />*/}
                                                         </div>
                                                     )
                                                 }

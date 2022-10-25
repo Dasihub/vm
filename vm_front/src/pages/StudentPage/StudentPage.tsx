@@ -5,9 +5,8 @@ import { IDiscipline, IJournal, ILoader, ISemester, ITeacher, IValueSelect } fro
 import { valueType } from '../../components/SelectCustom/ISelect'
 import { useHttp } from '../../hooks/useHttp'
 import { useGroupBy } from '../../hooks/useGroupBy'
-import dayjs from 'dayjs'
-import styles from './styles.module.scss'
 import { JournalStudent } from '../../ui'
+import styles from './styles.module.scss'
 
 const StudentPage: React.FC = () => {
     const { request } = useHttp()
@@ -35,30 +34,65 @@ const StudentPage: React.FC = () => {
         v_teacher: { value: null, label: '' }
     })
 
-    const visitDateGrouped = useGroupBy(journal, 'visitDate')
-
-    const shotNameGrouped = useGroupBy(journal, 'short_name')
+    const visitDateGrouped = useGroupBy(journal, 'short_name')
 
     const changeYear = (v: valueType) => {
-        setValueSelects({ ...valueSelects, v_year: v })
+        setValueSelects({
+            ...valueSelects,
+            v_year: v,
+            v_semester: { value: null, label: '' },
+            v_ws: { value: null, label: '' },
+            v_teacher: { value: null, label: '' }
+        })
+        setDiscipline(undefined)
+        if (journal.length) {
+            setJournal([])
+        }
     }
 
     const changeWs = (v: valueType) => {
-        setValueSelects({ ...valueSelects, v_ws: v })
+        setValueSelects({ ...valueSelects, v_ws: v, v_semester: { value: null, label: '' }, v_teacher: { value: null, label: '' } })
+        setDiscipline(undefined)
+        if (disciplines.length) {
+            setDisciplines([])
+        }
         getDiscipline(v.value)
+        if (semester.length) {
+            setSemester([])
+        }
+        if (teachers.length) {
+            setTeachers([])
+        }
+        if (journal.length) {
+            setJournal([])
+        }
     }
 
     const changeDiscipline = (v: valueType) => {
         // const [id_discipline, credits, isSelect] = String(v.value).split('_')
         const a = disciplines.find(item => item.num == v.value)
-        console.log(a, 'a')
         setDiscipline(a)
+        if (semester.length) {
+            setSemester([])
+        }
         getSemester(a?.id_discipline)
+        if (teachers.length) {
+            setTeachers([])
+        }
+        if (journal.length) {
+            setJournal([])
+        }
     }
 
     const changeSemester = (v: valueType) => {
-        setValueSelects({ ...valueSelects, v_semester: v })
+        setValueSelects({ ...valueSelects, v_semester: v, v_teacher: { value: null, label: '' } })
+        if (teachers.length) {
+            setTeachers([])
+        }
         getTeacher(v.value)
+        if (journal.length) {
+            setJournal([])
+        }
     }
 
     const changeTeacher = (v: valueType) => {
@@ -110,11 +144,11 @@ const StudentPage: React.FC = () => {
         setJournal(data)
         setLoader({ ...loader, journal: false })
 
-        const shotNameGroupedNew = useGroupBy(data, 'short_name')
+        const shotNameGroupedNew = useGroupBy(data, 'visitDate')
 
         // const obj
         Object.keys(shotNameGroupedNew).forEach((keyVid, indexVid) => {
-            const groupedDate = useGroupBy(shotNameGroupedNew[keyVid], 'visitDate')
+            const groupedDate = useGroupBy(shotNameGroupedNew[keyVid], 'short_name')
             shotNameGroupedNew[keyVid] = groupedDate
             Object.keys(groupedDate).forEach((keyDate, indexDate) => {
                 const groupedTimes = useGroupBy(shotNameGroupedNew[keyVid][keyDate], 'timesCount')
@@ -129,12 +163,10 @@ const StudentPage: React.FC = () => {
         })
 
         data.forEach((item: any) => {
-            if (item.timesCount > max[item.short_name]) {
-                max[item.short_name] = item.timesCount
+            if (item.timesCount > max[item.visitDate]) {
+                max[item.visitDate] = item.timesCount
             }
         })
-
-        console.log({ shotNameGroupedNew, max })
 
         setData(shotNameGroupedNew)
         setDataMax(max)
@@ -152,7 +184,7 @@ const StudentPage: React.FC = () => {
 
     return (
         <>
-            <div className="flex justify-content-between gap-2">
+            <div className={styles.container}>
                 <div className="w-100">
                     <SelectCustom
                         placeholder="Учебный год"
@@ -191,7 +223,7 @@ const StudentPage: React.FC = () => {
                     />
                 </div>
             </div>
-            <div className="flex justify-content-between gap-2 mt-2">
+            <div className={`${styles.container} mt-2`}>
                 <div className="w-100">
                     <SelectCustom
                         placeholder="Семестр"
@@ -211,17 +243,19 @@ const StudentPage: React.FC = () => {
                         options={teachers.map(item => ({ value: item.id_teacher, label: item.t_fio }))}
                         loader={loader.teacher}
                         onChange={changeTeacher}
-                        isDisabled={!discipline?.id_discipline}
+                        isDisabled={!v_semester.value}
                     />
                 </div>
             </div>
             {loader.journal ? (
-                <div className="flex justify-content-center mt-2">
+                <div className={`${styles.container} mt-2`}>
                     <Loader />
                 </div>
             ) : journal.length ? (
                 <JournalStudent data={data} dataMax={dataMax} visitDateGrouped={visitDateGrouped} />
-            ) : null}
+            ) : (
+                <p className="text-center mt-4">Пока нет данных!</p>
+            )}
         </>
     )
 }

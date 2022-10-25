@@ -48,11 +48,49 @@ const TeacherPage: React.FC = () => {
     const { years } = useTypeSelector(state => state.yearReducer)
     const { ws } = useTypeSelector(state => state.wsReducer)
 
-    const changeYear = (v: valueType) => setValueSelects({ ...valueSelects, v_year: v })
+    const changeYear = (v: valueType) => {
+        setValueSelects({
+            v_year: v,
+            v_sub_group: { value: null, label: '' },
+            v_type_group: { value: null, label: '' },
+            v_group: { value: null, label: '' },
+            v_semester: { value: null, label: '' },
+            v_vid_zanyatie: { value: null, label: '' },
+            date: '',
+            v_ws: { value: null, label: '' },
+            v_otsenka: { value: null, label: '' },
+            v_amount: { value: null, label: '' }
+        })
+        setDiscipline(undefined)
+    }
 
     const changeWs = (v: valueType) => {
-        setValueSelects({ ...valueSelects, v_ws: v })
+        setValueSelects({
+            ...valueSelects,
+            v_ws: v,
+            v_sub_group: { value: null, label: '' },
+            v_type_group: { value: null, label: '' },
+            v_group: { value: null, label: '' },
+            v_semester: { value: null, label: '' },
+            v_vid_zanyatie: { value: null, label: '' },
+            date: '',
+            v_otsenka: { value: null, label: '' },
+            v_amount: { value: null, label: '' }
+        })
+        setDiscipline(undefined)
+        if (disciplines.length) {
+            setDisciplines([])
+        }
         getDiscipline(v.value)
+        if (semester) {
+            setSemester([])
+        }
+        if (groups.length) {
+            setGroups([])
+        }
+        if (vidZanyatie.length) {
+            setVidZanyatie([])
+        }
         if (studentList.length) {
             setStudentList([])
         }
@@ -61,22 +99,70 @@ const TeacherPage: React.FC = () => {
     const changeDiscipline = (v: valueType) => {
         const a = disciplines.find(item => item.discipline === v.value)
         setDiscipline(a)
+        setValueSelects({
+            ...valueSelects,
+            v_sub_group: { value: null, label: '' },
+            v_type_group: { value: null, label: '' },
+            v_group: { value: null, label: '' },
+            v_semester: { value: null, label: '' },
+            v_vid_zanyatie: { value: null, label: '' },
+            date: '',
+            v_otsenka: { value: null, label: '' },
+            v_amount: { value: null, label: '' }
+        })
+        if (semester) {
+            setSemester([])
+        }
         getSemester(a?.id_discipline, a?.isSelect, a?.Krdt)
+        if (groups.length) {
+            setGroups([])
+        }
+        if (vidZanyatie.length) {
+            setVidZanyatie([])
+        }
         if (studentList.length) {
             setStudentList([])
         }
     }
 
     const changeSemester = (v: valueType) => {
-        setValueSelects({ ...valueSelects, v_semester: v })
+        setValueSelects({
+            ...valueSelects,
+            v_semester: v,
+            v_sub_group: { value: null, label: '' },
+            v_type_group: { value: null, label: '' },
+            v_group: { value: null, label: '' },
+            v_vid_zanyatie: { value: null, label: '' },
+            date: '',
+            v_otsenka: { value: null, label: '' },
+            v_amount: { value: null, label: '' }
+        })
+        if (groups.length) {
+            setGroups([])
+        }
         getGroup(v.value)
+        if (vidZanyatie.length) {
+            setVidZanyatie([])
+        }
         if (studentList.length) {
             setStudentList([])
         }
     }
 
     const changeGroup = (v: valueType) => {
-        setValueSelects({ ...valueSelects, v_group: v })
+        setValueSelects({
+            ...valueSelects,
+            v_group: v,
+            v_sub_group: { value: null, label: '' },
+            v_type_group: { value: null, label: '' },
+            v_vid_zanyatie: { value: null, label: '' },
+            date: '',
+            v_otsenka: { value: null, label: '' },
+            v_amount: { value: null, label: '' }
+        })
+        if (vidZanyatie.length) {
+            setVidZanyatie([])
+        }
         getVidZanyatie()
         if (studentList.length) {
             setStudentList([])
@@ -84,7 +170,15 @@ const TeacherPage: React.FC = () => {
     }
 
     const changeVidZanyatie = (v: valueType) => {
-        setValueSelects({ ...valueSelects, v_vid_zanyatie: v })
+        setValueSelects({
+            ...valueSelects,
+            v_vid_zanyatie: v,
+            v_sub_group: { value: null, label: '' },
+            v_type_group: { value: null, label: '' },
+            date: '',
+            v_otsenka: { value: null, label: '' },
+            v_amount: { value: null, label: '' }
+        })
         if (studentList.length) {
             setStudentList([])
         }
@@ -103,7 +197,13 @@ const TeacherPage: React.FC = () => {
         if (d2 > d1) {
             return toast('Нельзя выбрать завтрашний день', 'warn')
         }
-        setValueSelects({ ...valueSelects, date: e.target.value })
+        setValueSelects({
+            ...valueSelects,
+            date: e.target.value,
+            v_sub_group: { value: null, label: '' },
+            v_type_group: { value: null, label: '' },
+            v_otsenka: { value: null, label: '' }
+        })
         getOtsenka()
         if (studentList.length) {
             setStudentList([])
@@ -115,12 +215,18 @@ const TeacherPage: React.FC = () => {
             setValueSelects({ ...valueSelects, v_type_group: v })
             return setStudentList([])
         }
-        setValueSelects({ ...valueSelects, v_type_group: v, v_sub_group: { value: null, label: '' } })
+        setValueSelects({
+            ...valueSelects,
+            v_type_group: v,
+            v_sub_group: { value: null, label: '' },
+            v_otsenka: { value: null, label: '' },
+            v_amount: { value: null, label: '' }
+        })
         getStudentList()
     }
 
     const changeSubGroup = (v: valueType) => {
-        setValueSelects({ ...valueSelects, v_sub_group: v })
+        setValueSelects({ ...valueSelects, v_sub_group: v, v_otsenka: { value: null, label: '' }, v_amount: { value: null, label: '' } })
         getStudentList(v.value)
     }
 
@@ -353,7 +459,9 @@ const TeacherPage: React.FC = () => {
                         </tbody>
                     </table>
                 </div>
-            ) : null}
+            ) : (
+                <p className="text-center mt-4">Пока нет данных!</p>
+            )}
         </>
     )
 }

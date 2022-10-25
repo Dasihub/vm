@@ -1,1 +1,4 @@
-export interface INavigationProps {}
+export interface INavigationProps {
+    isNavigation: boolean
+    changeMenu: () => void
+}

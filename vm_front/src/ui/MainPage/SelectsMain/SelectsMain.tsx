@@ -1,7 +1,8 @@
 import React from 'react'
-import { Input, SelectCustom } from '../../../components'
+import { SelectCustom } from '../../../components'
 import { ISelectsMainIProps } from './ISelectsMain'
 import { useTypeSelector } from '../../../hooks/useTypeSelector'
+import styles from './styles.module.scss'
 
 const SelectsMain: React.FC<ISelectsMainIProps> = ({
     valueSelects,
@@ -28,7 +29,7 @@ const SelectsMain: React.FC<ISelectsMainIProps> = ({
 
     return (
         <>
-            <div className="flex justify-content-between gap-2">
+            <div className={styles.container}>
                 <div className="w-100">
                     <SelectCustom
                         placeholder="Учебный год"
@@ -61,6 +62,8 @@ const SelectsMain: React.FC<ISelectsMainIProps> = ({
                         isDisabled={!valueSelects.v_ws.value}
                     />
                 </div>
+            </div>
+            <div className={styles.container}>
                 <div className="w-100">
                     <SelectCustom
                         placeholder="Факультет"
@@ -83,8 +86,6 @@ const SelectsMain: React.FC<ISelectsMainIProps> = ({
                         isDisabled={!valueSelects.v_faculty.value}
                     />
                 </div>
-            </div>
-            <div className="flex justify-content-between gap-2 mt-2">
                 <div className="w-100">
                     <SelectCustom
                         placeholder="Направление"
@@ -96,6 +97,8 @@ const SelectsMain: React.FC<ISelectsMainIProps> = ({
                         isDisabled={!valueSelects.v_feduc.value}
                     />
                 </div>
+            </div>
+            <div className={styles.container}>
                 <div className="w-100">
                     <SelectCustom
                         placeholder="Специальность"
@@ -107,8 +110,6 @@ const SelectsMain: React.FC<ISelectsMainIProps> = ({
                         isDisabled={!valueSelects.v_direction.value}
                     />
                 </div>
-            </div>
-            <div className="flex justify-content-between gap-2 mt-2">
                 <div className="w-100">
                     <SelectCustom
                         placeholder="Группа"
