@@ -29,6 +29,7 @@ async function Delete(req, res) {
   const pool = getConnected()
     ? await poolPromise()
     : await connectWithCookie(cookieId);
+  if (pool===false) return false;
   const { recordset } = await pool
     .input("Cookie", sql.VarChar(50), cookieId)
     // .input("Cookie", sql.VarChar(50), md5(cookieId))
