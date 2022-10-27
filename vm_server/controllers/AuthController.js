@@ -164,38 +164,35 @@ class AuthController {
                 const userData = verifyAccessToken(token);
 
                 if (!userData) {
-                    return res.send({
+                    return res.status(401).json({
                         error: 1,
-                        messages: ['That did not work, please try again.'],
-                        result: false,
+                        message: 'invalid token',
+                        data: false,
                     });
                 }
                 const { id, uid, role, fullName } = userData.data;
-
-                return res.send({
-                    error: 0,
-                    messages: ['Logged in successfully.'],
-                    result: {
-                        token,
-                        id,
-                        uid,
-                        role,
-                        fullName,
-                    },
-                });
+                 const isLogIn = await COOKIE.LOGIN(req, res, role, id, uid);
+                if (isLogIn) {
+                    return res.status(200).json({
+                        error: 0,
+                        message: req.t('accessAuth'),
+                        data: { id, uid, role, fullName }
+                    });
+                }
+                return res.status(401).json({ data: false, error: 1, message: 'First time, please login with password' });
             }
 
-            return res.json({ result: 400, error: 1, message: 'no token' });
+            return  res.status(400).json({ data: false, error: 1, message: 'no token' });
         } catch (err) {
             console.log({ err });
             if (err instanceof jwt.TokenExpiredError) {
-                return res.send({
+                return res.status(403).json({
                     error: 2,
-                    messages: ['Token expired, please try again.'],
-                    result: 403,
+                    message: 'Token expired, please try again.',
+                    data: false,
                 });
             }
-            return res.json({ result: 500, message: err.message, error: 3 });
+            return res.status(500).json({ data:false , message: err.message, error: 3 });
         }
     }
 }

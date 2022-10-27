@@ -96,7 +96,7 @@ async function Login(req, res, role, avn_user, user) {
   // const ip = req.headers["x-forwarded-for"] ? req.headers["x-forwarded-for"].split(",").shift() : req.ip;
 
   const pool = await poolPromise();
-
+  if (pool===false) return false
   const { recordset } = await pool
     .input("id_avn_user", sql.Int, avn_user)
     .input("id_user", sql.Int, user)
