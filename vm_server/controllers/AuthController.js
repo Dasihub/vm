@@ -6,6 +6,25 @@ const COOKIE = require('../routes/cookies');
 const { sql, poolPromise, getConnected, connectWithLogin, myPool } = require('../modules/DB_MS');
 
 const ACCESS_TOKEN_SECRET = '5c543f356c79a4717708dfdde1a872c9bc6a4369d2b419bc0a8c234ea9795df71727a375bea260aede25f87fa5d504c029eb7f9513f2792eea169cc5cf2d0db2';
+const verifyAccessToken = (token) => {
+    console.log({ token });
+    const decodedData = jwt.verify(token, ACCESS_TOKEN_SECRET);
+    console.log({ decodedData });
+
+    if (!decodedData) {
+        return false;
+    }
+
+    return decodedData;
+};
+
+// const generateAccessToken = () => {
+//     // expires after half and hour (1800 seconds = 30 minutes)
+//     const a = jwt.sign({ data: { id: -1, uid: 77256, fullName: 'STUDENT', role: 2 } }, ACCESS_TOKEN_SECRET, { expiresIn: '30d' });
+//     console.log(a, 'new TOken');
+// };
+//
+// generateAccessToken();
 
 class AuthController {
     // Оброботчик запроса для авторизации
@@ -137,56 +156,46 @@ class AuthController {
         }
     }
 
-    verifyAccessToken(token) {
-        const decodedData = jwt.verify(token, ACCESS_TOKEN_SECRET);
-
-        if (!decodedData) {
-            return false;
-        }
-
-        return decodedData;
-    }
-
-    async token(req, res) {
+    async isToken(req, res) {
         try {
             const { token } = req.query;
             console.log(token, 'token');
-            if (token && token?.length) {
-                const userData = this.verifyAccessToken(token);
+            if (token.length) {
+                const userData = verifyAccessToken(token);
+
                 if (!userData) {
-                    return res.status(401).json({
-                        message: 'Такого пользователя не существует',
-                        error: 'warn',
-                        data: {},
+                    return res.send({
+                        error: 1,
+                        messages: ['That did not work, please try again.'],
+                        result: false,
                     });
                 }
                 const { id, uid, role, fullName } = userData.data;
 
-                res.status(202).json({
-                    data: userData.data,
+                return res.send({
+                    error: 0,
+                    messages: ['Logged in successfully.'],
+                    result: {
+                        token,
+                        id,
+                        uid,
+                        role,
+                        fullName,
+                    },
                 });
-
-                // return resp.send({
-                //     status: 0,
-                //     error: 0,
-                //     messages: ['Logged in successfully.'],
-                //     result: {
-                //         token,
-                //         id,
-                //         uid,
-                //         role,
-                //         fullName,
-                //     },
-                // });
             }
-        } catch (e) {
-            console.log(e);
-            res.status(500).json({
-                message: req.t('error'),
-                type: 'error',
-                data: [],
-                auth: false,
-            });
+
+            return res.json({ result: 400, error: 1, message: 'no token' });
+        } catch (err) {
+            console.log({ err });
+            if (err instanceof jwt.TokenExpiredError) {
+                return res.send({
+                    error: 2,
+                    messages: ['Token expired, please try again.'],
+                    result: 403,
+                });
+            }
+            return res.json({ result: 500, message: err.message, error: 3 });
         }
     }
 }

@@ -80,7 +80,10 @@ const App: React.FC = () => {
     }, [isAuth])
 
     React.useEffect(() => {
+        const pathname = window.location.pathname
+        // if (pathname != '/token') {
         checkAuth()
+        // }
         isLang()
     }, [])
 

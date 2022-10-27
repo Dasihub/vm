@@ -5,6 +5,7 @@ import MainPage from './MainPage/MainPage'
 import AuthPage from './AuthPage/AuthPage'
 import { Loader } from '../components'
 import { useTypeSelector } from '../hooks/useTypeSelector'
+import CheckTokenPage from './CheckToken/CheckTokenPage'
 
 const LazyTeacher = React.lazy(() => import('./TeacherPage/TeacherPage'))
 const LazyStudent = React.lazy(() => import('./StudentPage/StudentPage'))
@@ -32,6 +33,7 @@ const Router: React.FC = () => {
                                     </React.Suspense>
                                 }
                             />
+                            <Route path="/token" element={<CheckTokenPage />} />
                             <Route path="/login" element={<Navigate replace to="/student" />} />
                             <Route path="*" element={<Error404 />} />
                             <Route path="/" element={<Navigate replace to="/student" />} />
@@ -55,6 +57,7 @@ const Router: React.FC = () => {
                                     </React.Suspense>
                                 }
                             />
+                            <Route path="/token" element={<CheckTokenPage />} />
                             <Route path="/login" element={<Navigate replace to="/main" />} />
                             <Route path="*" element={<Error404 />} />
                             <Route path="/" element={<Navigate replace to="/main" />} />
@@ -68,6 +71,7 @@ const Router: React.FC = () => {
 
     return (
         <Routes>
+            <Route path="/token" element={<CheckTokenPage />} />
             <Route path="/main" element={<Navigate replace to="/login" />} />
             <Route path="/teacher" element={<Navigate replace to="/login" />} />
             <Route path="/student" element={<Navigate replace to="/login" />} />

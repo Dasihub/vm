@@ -4,15 +4,15 @@ import { useGroupBy } from '../../../hooks/useGroupBy'
 import dayjs from 'dayjs'
 
 const Students: React.FC<IStudentsProps> = ({ students, showModal }) => {
-    const studentsFiltered = students.filter(x => x.visitDate !== null)
-    const educGrouped = useGroupBy(studentsFiltered, 'discipline')
-    const studentGrouped = useGroupBy(studentsFiltered, 's_fio')
+    // const studentsFiltered = students.filter(x => x.visitDate !== null)
+    const educGrouped = useGroupBy(students, 'discipline')
+    const studentGrouped = useGroupBy(students, 's_fio')
 
     Object.keys(educGrouped).forEach(key => {
         educGrouped[key] = useGroupBy(educGrouped[key], 'visitDate')
     })
 
-    if (!studentsFiltered.length) {
+    if (!students.length) {
         return <h4 className="text-center mt-2">Нет данных</h4>
     }
 
@@ -46,7 +46,7 @@ const Students: React.FC<IStudentsProps> = ({ students, showModal }) => {
                                     .sort()
                                     .map(idDate => (
                                         <th rowSpan={1} colSpan={1} key={'date' + idDate}>
-                                            {dayjs(educGrouped[idDiscipline][idDate][0].visitDate).format('DD.MM.YYYY')}
+                                            {educGrouped[idDiscipline][idDate][0].visitDate}
                                             <div style={{ fontSize: '14px' }}>{educGrouped[idDiscipline][idDate][0].t_fio}</div>
                                         </th>
                                     ))
