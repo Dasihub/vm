@@ -17,7 +17,7 @@ const Students: React.FC<IStudentsProps> = ({ students, showModal }) => {
     }
 
     return (
-        <div className="overflow-auto mt-4" style={{ maxHeight: '900px' }}>
+        <div className="overflow-auto mt-4 box_container" style={{ maxHeight: '900px' }}>
             <table className="table">
                 <thead className="bg-light" style={{ position: 'sticky', top: '2px' }}>
                     <tr style={{ fontSize: '14px' }}>

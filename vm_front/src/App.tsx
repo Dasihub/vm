@@ -10,19 +10,22 @@ import { useTypeDispatch } from './hooks/useTypeDispatch'
 import { useTypeSelector } from './hooks/useTypeSelector'
 import { fetchUserInfo } from './redux/action/userInfoAction'
 import { LangSlice } from './redux/reducers/LangSlice'
+import { IRes } from './models/IModels'
+import { fetchYear } from './redux/action/yearAction'
+import { fetchSw } from './redux/action/wsAction'
 
 const App: React.FC = () => {
-    const { accessAuth } = authSlice.actions
+    const { accessAuth, clearData } = authSlice.actions
     const { changeLang } = LangSlice.actions
-    const { id_avn_user, isAuth } = useTypeSelector(state => state.authReducer)
+    const { id_avn_user, isAuth, id_role } = useTypeSelector(state => state.authReducer)
     const dispatch = useTypeDispatch()
     const toast = useMessage()
     const { request, loaderDefaultTrue } = useHttp()
     const [isNavigation, setIsNavigation] = React.useState<boolean>(false)
+    const [access, setAccess] = React.useState<null | number>(null)
 
     const checkAuth = async () => {
         const { message, type, auth, data }: IResAuth = await request('/auth/check')
-        toast(message, type)
         if (auth) {
             dispatch(
                 accessAuth({
@@ -34,6 +37,20 @@ const App: React.FC = () => {
             )
             // setAuth({ id_role: data.id_role, id_avn_user: data.id_avn_user, id_user: data.id_user, auth: true })
         }
+    }
+
+    const logout = async () => {
+        const { message, type }: IRes = await request('/auth/logout')
+        toast(message, type)
+        dispatch(clearData())
+        if (isNavigation) {
+            setIsNavigation(false)
+        }
+    }
+
+    const getAccessDekanat = async () => {
+        const { data }: { data: { perm: number; id_avn_user: number } } = await request(`/dekanat/access/${id_avn_user}`)
+        setAccess(data?.perm)
     }
 
     const isLang = () => {
@@ -53,6 +70,12 @@ const App: React.FC = () => {
     React.useEffect(() => {
         if (isAuth) {
             dispatch(fetchUserInfo(id_avn_user))
+            dispatch(fetchYear())
+            dispatch(fetchSw())
+        }
+
+        if (id_role == 1) {
+            getAccessDekanat()
         }
     }, [isAuth])
 
@@ -60,6 +83,10 @@ const App: React.FC = () => {
         checkAuth()
         isLang()
     }, [])
+
+    const changeMenu = (is: boolean) => {
+        setIsNavigation(is)
+    }
 
     if (loaderDefaultTrue) {
         return (
@@ -69,17 +96,13 @@ const App: React.FC = () => {
         )
     }
 
-    const changeMenu = () => {
-        setIsNavigation(!isNavigation)
-    }
-
     return (
         <>
             <ToastContainer />
             <Header changeMenu={changeMenu} isNavigation={isNavigation} />
-            {isAuth && <Navigation changeMenu={changeMenu} isNavigation={isNavigation} />}
+            {isAuth && <Navigation access={access} logout={logout} changeMenu={changeMenu} isNavigation={isNavigation} />}
             {/*<div style={{ width: '240px' }} />*/}
-            <Router auth={isAuth} />
+            <Router />
         </>
     )
 }

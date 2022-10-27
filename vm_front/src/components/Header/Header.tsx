@@ -38,7 +38,7 @@ const Header: React.FC<IHeaderProps> = ({ changeMenu, isNavigation }) => {
             } bg-color-light position-fixed top-0 flex justify-content-between p-l-r-2 align-items-center color-dark w-100`}>
             <div className="w-100">
                 {isAuth && (
-                    <div className={styles.burger} onClick={changeMenu}>
+                    <div className={styles.burger} onClick={changeMenu.bind(null, !isNavigation)}>
                         <div className={`${styles.line} ${isNavigation ? styles.line_1 : ''}`}></div>
                         <div className={`${styles.line} ${isNavigation ? styles.line_2 : ''}`}></div>
                         <div className={`${styles.line} ${isNavigation ? styles.line_3 : ''}`}></div>

@@ -436,7 +436,7 @@ const TeacherPage: React.FC = () => {
                     <Loader />
                 </div>
             ) : studentList.length ? (
-                <div className="overflow-auto mt-4" style={{ maxHeight: '900px', minHeight: '400px' }}>
+                <div className="overflow-auto mt-4 box_container" style={{ maxHeight: '900px', minHeight: '400px' }}>
                     <table className="table">
                         <thead className="bg-light">
                             <tr>

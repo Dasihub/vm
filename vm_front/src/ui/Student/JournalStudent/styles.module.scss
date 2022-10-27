@@ -1,32 +1,45 @@
 .table {
     //border-collapse: collapse;
     width: 100%;
-    //border-collapse: collapse;
+    border-collapse: collapse;
 
     thead {
         position: sticky;
         top: 2px;
         z-index: 1;
 
-        th {
-            padding: 7px 0;
-            background-color: #F7F9FC;
-            //border-bottom: 2px solid #dee2e6;
-            font-size: 15px;
+        tr {
+
+            th {
+                color: #64748B;
+                border-bottom: 1px solid #E3E8EF;
+                //border-bottom: 2px solid #dee2e6;
+                font-size: 15px;
+                padding: 26px;
+            }
         }
     }
 
     tbody {
 
         th {
-            background-color: #ececec;
+            border-bottom: 1px solid #E3E8EF;
             //border-bottom: 2px solid #dee2e6;
             font-size: 15px;
         }
 
-        td {
+        .td {
             padding: 7px 0;
-            border: 1px solid #757575;
+            border-bottom: 1px solid #E3E8EF;
+
+            :last-child {
+                border: none;
+            }
+        }
+
+        .td_non {
+            padding: 7px 0;
+            background-color: #f9f9f9;
 
             :last-child {
                 border: none;
@@ -47,7 +60,7 @@
 
     div {
         padding: 7px 0;
-        border-bottom: 1px dashed #757575;
+        //border-bottom: 1px solid #E3E8EF;
         display: flex;
         justify-content: center;
         align-items: center;

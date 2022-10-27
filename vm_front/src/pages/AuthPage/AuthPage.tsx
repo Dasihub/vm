@@ -18,6 +18,7 @@ const AuthPage: React.FC = () => {
         login: '',
         password: ''
     })
+    // transform: translateY(-30px) scale(1.1);
 
     const change = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value })
@@ -31,6 +32,7 @@ const AuthPage: React.FC = () => {
         })
         toast(message, type)
         if (auth) {
+            localStorage.setItem('form', JSON.stringify(form))
             dispatch(
                 accessAuth({
                     id_user: data.id_user,
@@ -42,6 +44,14 @@ const AuthPage: React.FC = () => {
         }
     }
 
+    React.useEffect(() => {
+        const valueInput: JSON | null | string = localStorage.getItem('form') || null
+        if (valueInput) {
+            const p: IForm = JSON.parse(valueInput)
+            setForm(p)
+        }
+    }, [])
+
     return (
         <div className={styles.container}>
             <img src={EllipseRt} alt="rt" className={styles.rt} />
@@ -52,13 +62,34 @@ const AuthPage: React.FC = () => {
             <div className={styles.auth}>
                 <form>
                     <h1 className="text-center">Авторизация</h1>
-                    <div style={{ marginTop: '40px' }} className={styles.content}>
-                        <input required={true} name="login" placeholder="Логин" onChange={change} />
+                    <div className={`${styles.content} ${styles.content_first}`}>
+                        <label style={form.login ? { transform: 'translateY(-19px) scale(1.1)' } : {}} htmlFor="login" className={styles.label}>
+                            Логин
+                        </label>
+                        <input
+                            required={true}
+                            value={form.login}
+                            name="login"
+                            id="login"
+                            // placeholder="Логин"
+                            onChange={change}
+                        />
                         <i className="fa fa-user" />
                     </div>
                     <div className={styles.content}>
-                        <input required={true} name="password" type="password" onChange={change} placeholder="Пароль" />
-                        <i className="fa fa-lock" />
+                        <label style={form.password ? { transform: 'translateY(-19px) scale(1.1)' } : {}} htmlFor="password" className={styles.label}>
+                            Пароль
+                        </label>
+                        <input
+                            required={true}
+                            value={form.password}
+                            name="password"
+                            type={isPassword ? 'text' : 'password'}
+                            onChange={change}
+                            id="password"
+                            // placeholder="Пароль"
+                        />
+                        <i onClick={setIsPassword.bind(null, !isPassword)} className={`fa-solid ${isPassword ? 'fa-eye' : 'fa-eye-slash'}`} />
                     </div>
                     <button onClick={loginApi} disabled={loader}>
                         {loader ? <Loader sm={true} /> : 'ВХОД'}

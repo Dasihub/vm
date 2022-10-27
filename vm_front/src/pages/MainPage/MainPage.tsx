@@ -7,9 +7,7 @@ import { useHttp } from '../../hooks/useHttp'
 import { ModalJurnal, SelectsMain, Students } from '../../ui'
 import { fetchJurnal } from '../../redux/action/jurnalAction'
 import { useTypeDispatch } from '../../hooks/useTypeDispatch'
-import { fetchYear } from '../../redux/action/yearAction'
 import { useTypeSelector } from '../../hooks/useTypeSelector'
-import { fetchSw } from '../../redux/action/wsAction'
 
 const MainPage: React.FC = () => {
     const { request } = useHttp()
@@ -283,24 +281,6 @@ const MainPage: React.FC = () => {
         getStudents(v.value)
     }
 
-    // const getYears = async () => {
-    //     const { data }: IResYears = await request('/selectors/years')
-    //     // @ts-ignore
-    //     const { id_a_year, p32 } = data.find((item) => item.defaultValue == 1)
-    //     setValueSelects({ ...valueSelects, v_year: { value: id_a_year, label: p32 } })
-    //     setYears(data)
-    // }
-
-    // const getWs = async () => {
-    //     setIsLoader({ ...isLoader, ws: true })
-    //     const { data }: IResWs = await request('/selectors/ws')
-    //     // @ts-ignore
-    //     // const { id_ws, ws } = data.find((item) => item.id_ws == 1)
-    //     // setValueSelects({ ...valueSelects, v_ws: { value: id_ws, label: ws } })
-    //     setIsLoader({ ...isLoader, ws: false })
-    //     setWs(data)
-    // }
-
     const getSemester = async (ws: number | null | string) => {
         setIsLoader({ ...isLoader, semester: true })
         const { data } = await request(`/selectors/semester/${ws}`)
@@ -383,8 +363,6 @@ const MainPage: React.FC = () => {
     React.useEffect(() => {
         // getYears()
         // getWs()
-        dispatch(fetchYear())
-        dispatch(fetchSw())
         dispatch(fetchJurnal())
     }, [])
 

@@ -51,7 +51,12 @@ const StudentPage: React.FC = () => {
     }
 
     const changeWs = (v: valueType) => {
-        setValueSelects({ ...valueSelects, v_ws: v, v_semester: { value: null, label: '' }, v_teacher: { value: null, label: '' } })
+        setValueSelects({
+            ...valueSelects,
+            v_ws: v,
+            v_semester: { value: null, label: '' },
+            v_teacher: { value: null, label: '' }
+        })
         setDiscipline(undefined)
         if (disciplines.length) {
             setDisciplines([])
@@ -184,67 +189,69 @@ const StudentPage: React.FC = () => {
 
     return (
         <>
-            <div className={styles.container}>
-                <div className="w-100">
-                    <SelectCustom
-                        placeholder="Учебный год"
-                        label="Учебный год"
-                        value={v_year}
-                        options={years.map(item => ({ value: item.id_a_year, label: item.p32 }))}
-                        onChange={changeYear}
-                    />
+            <div className="box_container">
+                <div className={styles.container}>
+                    <div className="w-100">
+                        <SelectCustom
+                            placeholder="Учебный год"
+                            label="Учебный год"
+                            value={v_year}
+                            options={years.map(item => ({ value: item.id_a_year, label: item.p32 }))}
+                            onChange={changeYear}
+                        />
+                    </div>
+                    <div className="w-100">
+                        <SelectCustom
+                            placeholder="Полугодие"
+                            label="Полугодие"
+                            value={v_ws.value ? v_ws : ''}
+                            options={ws.map(item => ({ value: item.id_ws, label: item.ws }))}
+                            onChange={changeWs}
+                            isDisabled={!v_year.value}
+                        />
+                    </div>
+                    <div className="w-100">
+                        <SelectCustom
+                            placeholder="Дисциплина"
+                            label="Дисциплина"
+                            value={
+                                discipline?.id_discipline
+                                    ? {
+                                          value: discipline?.num,
+                                          label: discipline?.discipline
+                                      }
+                                    : ''
+                            }
+                            options={disciplines.map(item => ({ value: item.num, label: item.discipline }))}
+                            loader={loader.discipline}
+                            onChange={changeDiscipline}
+                            isDisabled={!v_ws.value}
+                        />
+                    </div>
                 </div>
-                <div className="w-100">
-                    <SelectCustom
-                        placeholder="Полугодие"
-                        label="Полугодие"
-                        value={v_ws.value ? v_ws : ''}
-                        options={ws.map(item => ({ value: item.id_ws, label: item.ws }))}
-                        onChange={changeWs}
-                        isDisabled={!v_year.value}
-                    />
-                </div>
-                <div className="w-100">
-                    <SelectCustom
-                        placeholder="Дисциплина"
-                        label="Дисциплина"
-                        value={
-                            discipline?.id_discipline
-                                ? {
-                                      value: discipline?.num,
-                                      label: discipline?.discipline
-                                  }
-                                : ''
-                        }
-                        options={disciplines.map(item => ({ value: item.num, label: item.discipline }))}
-                        loader={loader.discipline}
-                        onChange={changeDiscipline}
-                        isDisabled={!v_ws.value}
-                    />
-                </div>
-            </div>
-            <div className={`${styles.container} mt-2`}>
-                <div className="w-100">
-                    <SelectCustom
-                        placeholder="Семестр"
-                        label="Семестр"
-                        value={v_semester.value ? v_semester : ''}
-                        options={semester.map(item => ({ value: item.id_semester, label: item.p43 }))}
-                        loader={loader.semester}
-                        onChange={changeSemester}
-                        isDisabled={!discipline?.id_discipline}
-                    />
-                </div>
-                <div className="w-100">
-                    <SelectCustom
-                        placeholder="Преподаватель"
-                        label="Преподаватель"
-                        value={v_teacher.value ? v_teacher : ''}
-                        options={teachers.map(item => ({ value: item.id_teacher, label: item.t_fio }))}
-                        loader={loader.teacher}
-                        onChange={changeTeacher}
-                        isDisabled={!v_semester.value}
-                    />
+                <div className={`${styles.container} mt-2`}>
+                    <div className="w-100">
+                        <SelectCustom
+                            placeholder="Семестр"
+                            label="Семестр"
+                            value={v_semester.value ? v_semester : ''}
+                            options={semester.map(item => ({ value: item.id_semester, label: item.p43 }))}
+                            loader={loader.semester}
+                            onChange={changeSemester}
+                            isDisabled={!discipline?.id_discipline}
+                        />
+                    </div>
+                    <div className="w-100">
+                        <SelectCustom
+                            placeholder="Преподаватель"
+                            label="Преподаватель"
+                            value={v_teacher.value ? v_teacher : ''}
+                            options={teachers.map(item => ({ value: item.id_teacher, label: item.t_fio }))}
+                            loader={loader.teacher}
+                            onChange={changeTeacher}
+                            isDisabled={!v_semester.value}
+                        />
+                    </div>
                 </div>
             </div>
             {loader.journal ? (

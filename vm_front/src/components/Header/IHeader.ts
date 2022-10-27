@@ -1,4 +1,4 @@
 export interface IHeaderProps {
     isNavigation: boolean
-    changeMenu: () => void
+    changeMenu: (is: boolean) => void
 }

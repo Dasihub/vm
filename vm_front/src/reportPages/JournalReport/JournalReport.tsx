@@ -189,7 +189,7 @@ const JournalReport: React.FC<IJournalReportProps> = ({
                     </>
                 )}
             </div>
-            <div className="print_container" ref={ref}>
+            <div className="print_container box_container mt-2" ref={ref}>
                 <h1 className="head_title">ЖУРНАЛ УЧЕТА ЗАНЯТИЙ</h1>
                 {noData ? (
                     <p className="text-center mt-4">Пока нет данных!</p>

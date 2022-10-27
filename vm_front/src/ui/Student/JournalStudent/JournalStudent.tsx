@@ -5,25 +5,19 @@ import styles from './styles.module.scss'
 
 const JournalStudent: React.FC<IJournalStudentProps> = ({ visitDateGrouped, data, dataMax }) => {
     return (
-        <div className="overflow-auto mt-4" style={{ maxHeight: '900px', minHeight: '400px' }}>
+        <div className="overflow-auto mt-4 box_container" style={{ maxHeight: '900px', minHeight: '400px' }}>
             <table className={styles.table}>
                 <thead className="bg-light">
                     <tr>
-                        <th className="th" rowSpan={2} style={{ width: '50px' }}>
+                        <th rowSpan={2} style={{ width: '50px' }}>
                             №
                         </th>
-                        <th className="th" rowSpan={2}>
-                            Дата
-                        </th>
-                        <th className="th" colSpan={Object.keys(visitDateGrouped).length}>
-                            Вид занятие
-                        </th>
+                        <th rowSpan={2}>Дата</th>
+                        <th colSpan={Object.keys(visitDateGrouped).length}>Вид занятие</th>
                     </tr>
                     <tr>
                         {Object.keys(visitDateGrouped).map((item, index) => (
-                            <th className="th" key={index}>
-                                {item}
-                            </th>
+                            <th key={index}>{item}</th>
                         ))}
                     </tr>
                 </thead>
@@ -31,28 +25,42 @@ const JournalStudent: React.FC<IJournalStudentProps> = ({ visitDateGrouped, data
                     {Object.keys(data).map((itemData, index) => (
                         <>
                             <tr key={index}>
-                                <td className="text-center" rowSpan={dataMax[itemData]}>
+                                <td className={styles.td} style={{ textAlign: 'center' }} rowSpan={dataMax[itemData]}>
                                     {index + 1}
                                 </td>
-                                <td style={{ width: '200px' }} className="text-center" rowSpan={dataMax[itemData]}>
+                                <td className={styles.td} style={{ textAlign: 'center', width: '200px' }} rowSpan={dataMax[itemData]}>
                                     {dayjs(itemData).format('DD-MM-YYYY')}
                                 </td>
                                 {Object.keys(visitDateGrouped).map((itemVisitDate, indexVisitDate) => {
                                     return (
-                                        <td key={indexVisitDate} rowSpan={dataMax[itemData]}>
+                                        <td
+                                            className={!!data[itemData][itemVisitDate] ? styles.td : styles.td_non}
+                                            key={indexVisitDate}
+                                            rowSpan={dataMax[itemData]}>
                                             {Array.from(Array(dataMax[itemData]).keys()).map((itemTimesCount, indexTimesCount) => {
                                                 if (!!data[itemData][itemVisitDate]) {
                                                     return (
-                                                        <div key={indexTimesCount} className="text-center">
+                                                        <div
+                                                            key={indexTimesCount}
+                                                            className={
+                                                                data[itemData][itemVisitDate][indexTimesCount + 1]?.length &&
+                                                                data[itemData][itemVisitDate][indexTimesCount + 1][0]?.timesCount
+                                                                    ? data[itemData][itemVisitDate][indexTimesCount + 1][0]?.otsenka ||
+                                                                      'color-primary'
+                                                                    : 'color-danger'
+                                                            }>
                                                             {data[itemData][itemVisitDate][indexTimesCount + 1]?.length &&
                                                             data[itemData][itemVisitDate][indexTimesCount + 1][0]?.timesCount
-                                                                ? data[itemData][itemVisitDate][indexTimesCount + 1][0]?.otsenka || ' присут '
-                                                                : '--'}
+                                                                ? data[itemData][itemVisitDate][indexTimesCount + 1][0]?.otsenka || 'присут'
+                                                                : 'отсутст'}
                                                         </div>
                                                     )
                                                 } else {
                                                     return (
-                                                        <div key={indexTimesCount} style={{ height: '34px' }} className="text-center">
+                                                        <div
+                                                            key={indexTimesCount}
+                                                            style={{ height: '34px', backgroundColor: '#F9F9F9' }}
+                                                            className="text-center">
                                                             {/*{indexTimesCount == 0 && (*/}
                                                             {/*    <td style={{ visibility: 'hidden' }} rowSpan={dataMax[itemData]}>*/}
                                                             {/*        nodeata*/}
