@@ -6,7 +6,9 @@ const initialState: IUser = {
     AVN_login: '',
     surname: '',
     name: '',
-    patronymic: ''
+    patronymic: '',
+    id_group: null,
+    name_group: ''
 }
 
 const UserInfoSlice = createSlice({
@@ -15,10 +17,13 @@ const UserInfoSlice = createSlice({
     reducers: {},
     extraReducers: {
         [fetchUserInfo.fulfilled.type]: (state: IUser, action: PayloadAction<IUser>) => {
-            state.patronymic = action.payload.patronymic
-            state.AVN_login = action.payload.AVN_login
-            state.surname = action.payload.surname
-            state.name = action.payload.name
+            const { patronymic, name_group, name, id_group, surname, AVN_login } = action.payload
+            state.patronymic = patronymic
+            state.AVN_login = AVN_login
+            state.surname = surname
+            state.name = name
+            state.name_group = name_group
+            state.id_group = id_group
         }
     }
 })

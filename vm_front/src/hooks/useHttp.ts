@@ -9,7 +9,6 @@ export const basesUrl = process.env.NODE_ENV == 'development' ? 'http://localhos
 export const useHttp = (isDefaultLoad?: boolean) => {
     const toast = useMessage()
     const [loader, setLoader] = React.useState<boolean>(false)
-    const [loaderDefaultTrue, setLoaderDefaultTrue] = React.useState<boolean>(true)
 
     const request = React.useCallback(async (url: string, method: 'GET' | 'POST' | 'DELETE' | 'PUT' = 'GET', body: any = null, headers: any = {}) => {
         try {
@@ -27,9 +26,8 @@ export const useHttp = (isDefaultLoad?: boolean) => {
             toast('Ошибка в сервере', 'error')
         } finally {
             setLoader(false)
-            setLoaderDefaultTrue(false)
         }
     }, [])
 
-    return { request, loader, loaderDefaultTrue }
+    return { request, loader }
 }

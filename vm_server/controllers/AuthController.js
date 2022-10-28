@@ -20,7 +20,7 @@ const verifyAccessToken = (token) => {
 
 // const generateAccessToken = () => {
 //     // expires after half and hour (1800 seconds = 30 minutes)
-//     const a = jwt.sign({ data: { id: -1, uid: 77256, fullName: 'STUDENT', role: 2 } }, ACCESS_TOKEN_SECRET, { expiresIn: '30d' });
+//     const a = jwt.sign({ data: { id: 5126, uid: 1322, fullName: 'STUDENT', role: 1 } }, ACCESS_TOKEN_SECRET, { expiresIn: '30d' });
 //     console.log(a, 'new TOken');
 // };
 //
@@ -78,6 +78,7 @@ class AuthController {
             });
         }
     }
+
     async check(req, res) {
         // Оброботчик запроса для аутентификации
         try {
@@ -108,6 +109,7 @@ class AuthController {
             });
         }
     }
+
     // Оброботчик запроса для выхода
     async logout(req, res) {
         try {
@@ -135,9 +137,12 @@ class AuthController {
 
     async userInfo(req, res) {
         try {
-            const { id } = req.params;
+            const { id_user, id_avn, id_role } = req.query;
             const pool = await poolPromise();
-            let { recordset } = await pool.query(`exec SP_info_user  ${id}`);
+            let { recordset } = await pool.query(`exec SP_AVN_USER_INFO
+                                                        @id_user = ${id_user},
+                                                        @id_avn = ${id_avn},
+                                                        @id_role = ${id_role}`);
 
             res.status(200).json({
                 message: req.t('successFull'),
@@ -159,7 +164,6 @@ class AuthController {
     async isToken(req, res) {
         try {
             const { token } = req.query;
-            console.log(token, 'token');
             if (token.length) {
                 const userData = verifyAccessToken(token);
 
@@ -167,32 +171,33 @@ class AuthController {
                     return res.status(401).json({
                         error: 1,
                         message: 'invalid token',
-                        data: false,
+                        data: {},
                     });
                 }
                 const { id, uid, role, fullName } = userData.data;
-                 const isLogIn = await COOKIE.LOGIN(req, res, role, id, uid);
+                const isLogIn = await COOKIE.LOGIN(req, res, role, id, uid);
                 if (isLogIn) {
                     return res.status(200).json({
                         error: 0,
                         message: req.t('accessAuth'),
-                        data: { id, uid, role, fullName }
+                        data: { id_avn_user: id, id_user: uid, id_role: role, fullName },
+                        auth: token,
                     });
                 }
-                return res.status(401).json({ data: false, error: 1, message: 'First time, please login with password' });
+                return res.status(401).json({ data: {}, error: 1, message: 'First time, please login with password' });
             }
 
-            return  res.status(400).json({ data: false, error: 1, message: 'no token' });
+            return res.status(400).json({ data: {}, error: 1, message: 'no token' });
         } catch (err) {
             console.log({ err });
             if (err instanceof jwt.TokenExpiredError) {
                 return res.status(403).json({
                     error: 2,
                     message: 'Token expired, please try again.',
-                    data: false,
+                    data: {},
                 });
             }
-            return res.status(500).json({ data:false , message: err.message, error: 3 });
+            return res.status(500).json({ data: false, message: err.message, error: 3 });
         }
     }
 }

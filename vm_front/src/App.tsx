@@ -13,21 +13,25 @@ import { LangSlice } from './redux/reducers/LangSlice'
 import { IRes } from './models/IModels'
 import { fetchYear } from './redux/action/yearAction'
 import { fetchSw } from './redux/action/wsAction'
+import { useNavigate } from 'react-router-dom'
 
 const App: React.FC = () => {
+    const navigate = useNavigate()
     const { accessAuth, clearData } = authSlice.actions
     const { changeLang } = LangSlice.actions
-    const { id_avn_user, isAuth, id_role } = useTypeSelector(state => state.authReducer)
+    const { id_avn_user, id_user, isAuth, id_role } = useTypeSelector(state => state.authReducer)
     const dispatch = useTypeDispatch()
     const toast = useMessage()
-    const { request, loaderDefaultTrue } = useHttp()
+    const { request } = useHttp()
+    const [mainLoader, setMainLoader] = React.useState<boolean>(true)
     const [isNavigation, setIsNavigation] = React.useState<boolean>(false)
     const [access, setAccess] = React.useState<null | number>(null)
 
     const checkAuth = async () => {
         const { message, type, auth, data }: IResAuth = await request('/auth/check')
+        setMainLoader(false)
         if (auth) {
-            dispatch(
+            return dispatch(
                 accessAuth({
                     id_role: data.id_role,
                     id_avn_user: data.id_avn_user,
@@ -37,6 +41,7 @@ const App: React.FC = () => {
             )
             // setAuth({ id_role: data.id_role, id_avn_user: data.id_avn_user, id_user: data.id_user, auth: true })
         }
+        navigate('/login')
     }
 
     const logout = async () => {
@@ -69,7 +74,7 @@ const App: React.FC = () => {
 
     React.useEffect(() => {
         if (isAuth) {
-            dispatch(fetchUserInfo(id_avn_user))
+            dispatch(fetchUserInfo({ id_avn_user, id_user, id_role }))
             dispatch(fetchYear())
             dispatch(fetchSw())
         }
@@ -81,17 +86,19 @@ const App: React.FC = () => {
 
     React.useEffect(() => {
         const pathname = window.location.pathname
-        // if (pathname != '/token') {
-        checkAuth()
-        // }
         isLang()
+        if (pathname != '/token') {
+            checkAuth()
+        } else {
+            setMainLoader(false)
+        }
     }, [])
 
     const changeMenu = (is: boolean) => {
         setIsNavigation(is)
     }
 
-    if (loaderDefaultTrue) {
+    if (mainLoader) {
         return (
             <div className="vh-100 flex justify-content-center align-items-center">
                 <Loader />

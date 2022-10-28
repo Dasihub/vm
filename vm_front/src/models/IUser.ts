@@ -3,4 +3,6 @@ export interface IUser {
     surname: string
     name: string
     patronymic: string
+    id_group: null | number
+    name_group: null | string
 }

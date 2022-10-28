@@ -59,12 +59,12 @@ const Navigation: React.FC<INavigationProps> = ({ isNavigation, changeMenu, logo
                             </div>
                         </NavLink>
                     ) : null}
-                    <NavLink onClick={changeMenu.bind(null, false)} to="/report" className={({ isActive }) => (isActive ? styles.active_link : '')}>
+                    <NavLink onClick={changeMenu.bind(null, false)} to="/pay" className={({ isActive }) => (isActive ? styles.active_link : '')}>
                         <div className={`${styles.link}  mt-2 flex color-light gap-3`}>
                             <div style={{ width: '25px' }} className="flex justify-content-center align-items-center">
                                 <i className="fa-sharp fa-solid fa-file-word" />
                             </div>
-                            Отчеты
+                            Оплата нб
                         </div>
                     </NavLink>
                     <div style={{ cursor: 'pointer' }} onClick={logout} className={`${styles.link}  mt-2 flex color-light gap-3`}>
