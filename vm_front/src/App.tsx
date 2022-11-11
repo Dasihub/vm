@@ -1,7 +1,8 @@
 import React from 'react'
 import Router from './pages/Router'
-import { Header, Loader, Navigation } from './components'
 import { ToastContainer } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
+import { Header, Loader, Navigation, Tabs } from './components'
 import { useHttp } from './hooks/useHttp'
 import { useMessage } from './hooks/useMessage'
 import { IResAuth } from './pages/AuthPage/IAuth'
@@ -13,11 +14,10 @@ import { LangSlice } from './redux/reducers/LangSlice'
 import { IRes } from './models/IModels'
 import { fetchYear } from './redux/action/yearAction'
 import { fetchSw } from './redux/action/wsAction'
-import { useNavigate } from 'react-router-dom'
 
 const App: React.FC = () => {
     const navigate = useNavigate()
-    const { accessAuth, clearData } = authSlice.actions
+    const { accessAuth, clearData, role3 } = authSlice.actions
     const { changeLang } = LangSlice.actions
     const { id_avn_user, id_user, isAuth, id_role } = useTypeSelector(state => state.authReducer)
     const dispatch = useTypeDispatch()
@@ -28,7 +28,7 @@ const App: React.FC = () => {
     const [access, setAccess] = React.useState<null | number>(null)
 
     const checkAuth = async () => {
-        const { message, type, auth, data }: IResAuth = await request('/auth/check')
+        const { auth, data }: IResAuth = await request('/auth/check')
         setMainLoader(false)
         if (auth) {
             return dispatch(
@@ -55,7 +55,10 @@ const App: React.FC = () => {
 
     const getAccessDekanat = async () => {
         const { data }: { data: { perm: number; id_avn_user: number } } = await request(`/dekanat/access/${id_avn_user}`)
-        setAccess(data?.perm)
+        if (data?.perm == 1) {
+            setAccess(data?.perm)
+            dispatch(role3())
+        }
     }
 
     const isLang = () => {
@@ -111,7 +114,6 @@ const App: React.FC = () => {
             <ToastContainer />
             <Header changeMenu={changeMenu} isNavigation={isNavigation} />
             {isAuth && <Navigation access={access} logout={logout} changeMenu={changeMenu} isNavigation={isNavigation} />}
-            {/*<div style={{ width: '240px' }} />*/}
             <Router />
         </>
     )

@@ -1,4 +1,5 @@
 import { valueType } from '../components/SelectCustom/ISelect'
+import { typeTab } from '../components/Tabs/ITabs'
 
 export const amount: valueType[] = [
     { value: 1, label: 'Первый' },
@@ -26,4 +27,14 @@ export const subGroupFor: valueType[] = [
     { value: 2, label: '2 - Подгруппа' },
     { value: 3, label: '3 - Подгруппа' },
     { value: 4, label: '4 - Подгруппа' }
+]
+
+export const dekanatDataTab: typeTab[] = [
+    { title: 'Поиск студентов', id: 1 },
+    { title: 'Деканат', id: 2 }
+]
+
+export const teacherDataTab: typeTab[] = [
+    { title: 'Поиск студентов', id: 1 },
+    { title: 'Преподователь', id: 2 }
 ]

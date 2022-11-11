@@ -1,0 +1,22 @@
+.container {
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+}
+
+.tab {
+    text-align: center;
+    width: fit-content;
+    min-width: 100px;
+    color: #64748B;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 19px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.active_tab {
+    border-bottom: 3px #2869FE solid;
+    color: #2869FE;
+}

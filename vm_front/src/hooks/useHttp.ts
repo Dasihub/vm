@@ -6,7 +6,7 @@ import { useTypeSelector } from './useTypeSelector'
 
 export const basesUrl = process.env.NODE_ENV == 'development' ? 'http://localhost:5000/api' : '/api'
 
-export const useHttp = (isDefaultLoad?: boolean) => {
+export const useHttp = () => {
     const toast = useMessage()
     const [loader, setLoader] = React.useState<boolean>(false)
 

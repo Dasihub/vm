@@ -35,37 +35,39 @@ const SelectsTeacher: React.FC<ISelectsTeacherProps> = ({
     subgroupStudents,
     postSubGroupStudent
 }) => {
-    console.log('render')
     const { v_year, v_semester, v_group, v_vid_zanyatie, v_ws, v_type_group, date, v_amount, v_sub_group } = valueSelects
     return (
         <>
             {isModal && (
-                <ModalWindow title="Подгруппа" hide={hideModal}>
+                <ModalWindow title="Сформировать подгруппы" hide={hideModal}>
                     <>
                         {loader.modal && (
                             <div className="flex justify-content-center align-items-center">
                                 <Loader />
                             </div>
                         )}
-                        <table className="table">
-                            <thead style={{ top: '0' }} className="bg-light">
-                                <tr>
-                                    <th>№</th>
-                                    <th>ФИО</th>
-                                    <th style={{ width: '200px' }}>Подгруппа</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {subgroupStudents.map((item, index) => (
-                                    <RenderSubGroup key={item.id_student} item={item} index={index} postSubGroupStudent={postSubGroupStudent} />
-                                ))}
-                            </tbody>
-                        </table>
+                        {subgroupStudents.length ? (
+                            <table className="table">
+                                <thead style={{ top: '0' }} className="bg-light">
+                                    <tr style={{ backgroundColor: 'white', textAlign: 'center' }}>
+                                        <th>№</th>
+                                        <th>ФИО</th>
+                                        <th style={{ width: '200px' }}>Подгруппа</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {subgroupStudents.map((item, index) => (
+                                        <RenderSubGroup key={item.id_student} item={item} index={index} postSubGroupStudent={postSubGroupStudent} />
+                                    ))}
+                                </tbody>
+                            </table>
+                        ) : null}
                     </>
                 </ModalWindow>
             )}
             <div className="box_container">
-                <div className={styles.container}>
+                <h2 className="text-center ">Преподователь</h2>
+                <div className={`${styles.container} mt-2`}>
                     <div className="w-100">
                         <SelectCustom
                             placeholder="Учебный год"
@@ -173,22 +175,24 @@ const SelectsTeacher: React.FC<ISelectsTeacherProps> = ({
                                     isDisabled={!date.length}
                                 />
                             </div>
-                            <div className="w-100">
-                                <SelectCustom
-                                    value={v_sub_group.value ? v_sub_group : ''}
-                                    placeholder="Подгруппа"
-                                    label="Подгруппа"
-                                    options={subGroup}
-                                    loader={loader.group}
-                                    onChange={changeSubGroup}
-                                    isDisabled={!v_type_group.value}
-                                />
-                            </div>
+                            {v_type_group.value == 1 && (
+                                <div className="w-100">
+                                    <SelectCustom
+                                        value={v_sub_group.value ? v_sub_group : ''}
+                                        placeholder="Подгруппа"
+                                        label="Подгруппа"
+                                        options={subGroup}
+                                        loader={loader.group}
+                                        onChange={changeSubGroup}
+                                        isDisabled={!v_type_group.value}
+                                    />
+                                </div>
+                            )}
                         </>
                     ) : null}
                 </div>
                 <div className="mt-2 flex gap-2 flex-wrap">
-                    <Button onClick={showModal} value="Сформировать" disabled={!(v_type_group.value == 1)} />
+                    {v_type_group.value == 1 && <Button onClick={showModal} value="Сформировать" disabled={!(v_type_group.value == 1)} />}
                     <Button onClick={PostEveryoneWasPresent} value="Все присутствовали" disabled={!studentList.length} />
                     <Button value="Отчет журнала" disabled={!studentList.length} onClick={setIsReport.bind(null, true)} />
                 </div>

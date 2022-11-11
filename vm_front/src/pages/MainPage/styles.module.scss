@@ -1,0 +1,17 @@
+.tab {
+    border-top: 1px solid #E3E8EF;
+    position: absolute;
+    top: 60px;
+    left: 240px;
+    width: calc(100% - 240px);
+    height: fit-content;
+    background-color: white;
+    padding: 10px;
+}
+
+@media (max-width: 1440px) {
+    .tab {
+        left: 0;
+        width: 100%;
+    }
+}

@@ -1,7 +1,10 @@
 export { default as Students } from './MainPage/Students/Students'
-export { default as SelectsMain } from './MainPage/SelectsMain/SelectsMain'
 export { default as ModalJurnal } from './MainPage/ModalJurnal/ModalJurnal'
 export { default as StudentsList } from './Teacher/StudentsList/StudentsList'
 export { default as SelectsTeacher } from './Teacher/SelectsTeacher/SelectsTeacher'
 export { default as JournalStudent } from './Student/JournalStudent/JournalStudent'
-// export { default as  } from '';
+export { default as Dekanat } from './MainPage/TabPagesDekanat/Dekanat/Dekanat'
+export { default as SearchStudent } from './MainPage/TabPagesDekanat/SearchStudent/SearchStudent'
+export { default as Teacher } from './Teacher/TabPagesTeacher/Teacher/Teacher'
+export { default as SearchStudentForTeacher } from './Teacher/TabPagesTeacher/SearchStudent/SearchStudent'
+// export { default as } from ''

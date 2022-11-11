@@ -13,6 +13,7 @@ const StudentPage: React.FC = () => {
     const { ws } = useTypeSelector(state => state.wsReducer)
     const { lang } = useTypeSelector(state => state.langReducer)
     const { years } = useTypeSelector(state => state.yearReducer)
+    const { id_group } = useTypeSelector(state => state.userInfoReducer)
     const { id_user } = useTypeSelector(state => state.authReducer)
     const [disciplines, setDisciplines] = React.useState<IDiscipline[]>([])
     const [discipline, setDiscipline] = React.useState<IDiscipline>()
@@ -108,7 +109,7 @@ const StudentPage: React.FC = () => {
     const getDiscipline = async (ws: null | number | string) => {
         setLoader({ ...loader, discipline: true })
         const { data }: { data: IDiscipline[] } = await request(
-            `/student/discipline/?id_year=${v_year.value}&id_ws=${ws}&id_group=${7175}&id_student=${59527}&lang=${lang}`
+            `/student/discipline/?id_year=${v_year.value}&id_ws=${ws}&id_group=${id_group}&id_student=${id_user}&lang=${lang}`
         )
         const a = data.map((item, index) => {
             return { ...item, num: index }
@@ -120,9 +121,7 @@ const StudentPage: React.FC = () => {
     const getSemester = async (id_discipline: number | string | undefined) => {
         setLoader({ ...loader, semester: true })
         const { data } = await request(
-            `/student/semester/?id_year=${v_year.value}&id_ws=${
-                v_ws.value
-            }&id_group=${7175}&id_student=${59527}&id_discipline=${id_discipline}&lang=${lang}`
+            `/student/semester/?id_year=${v_year.value}&id_ws=${v_ws.value}&id_group=${id_group}&id_student=${id_user}&id_discipline=${id_discipline}&lang=${lang}`
         )
         setSemester(data)
         setLoader({ ...loader, semester: false })
@@ -131,9 +130,7 @@ const StudentPage: React.FC = () => {
     const getTeacher = async (id_semester: null | number | string) => {
         setLoader({ ...loader, teacher: true })
         const { data } = await request(
-            `/student/teacher/?id_year=${v_year.value}&id_ws=${v_ws.value}&id_group=${7175}&id_student=${59527}&id_discipline=${
-                discipline?.id_discipline
-            }&id_semester=${id_semester}&is_select=${discipline?.isSelect}&lang=${lang}`
+            `/student/teacher/?id_year=${v_year.value}&id_ws=${v_ws.value}&id_group=${id_group}&id_student=${id_user}&id_discipline=${discipline?.id_discipline}&id_semester=${id_semester}&is_select=${discipline?.isSelect}&lang=${lang}`
         )
         setTeachers(data)
         setLoader({ ...loader, teacher: false })
@@ -142,9 +139,7 @@ const StudentPage: React.FC = () => {
     const getJournal = async (id_teacher: null | number | string) => {
         setLoader({ ...loader, journal: true })
         const { data } = await request(
-            `/student/journal/?id_year=${v_year.value}&id_ws=${v_ws.value}&id_group=${7175}&id_student=${59527}&id_discipline=${
-                discipline?.id_discipline
-            }&id_semester=${v_semester.value}&is_select=${discipline?.isSelect}&credit=${discipline?.credits}&id_teacher=${id_teacher}&lang=${lang}`
+            `/student/journal/?id_year=${v_year.value}&id_ws=${v_ws.value}&id_group=${id_group}&id_student=${id_user}&id_discipline=${discipline?.id_discipline}&id_semester=${v_semester.value}&is_select=${discipline?.isSelect}&credit=${discipline?.credits}&id_teacher=${id_teacher}&lang=${lang}`
         )
         setJournal(data)
         setLoader({ ...loader, journal: false })
@@ -190,7 +185,8 @@ const StudentPage: React.FC = () => {
     return (
         <>
             <div className="box_container">
-                <div className={styles.container}>
+                <h2 className="text-center ">Студент</h2>
+                <div className={`${styles.container} mt-2`}>
                     <div className="w-100">
                         <SelectCustom
                             placeholder="Учебный год"

@@ -27,10 +27,10 @@ const Navigation: React.FC<INavigationProps> = ({ isNavigation, changeMenu, logo
                     {surname} {name}
                 </div>
                 <nav className="mt-2">
-                    {id_role == 1 ? (
+                    {id_role == 1 || id_role == 3 ? (
                         <>
                             {access == 1 ? (
-                                <NavLink onClick={changeMenu.bind(null, false)} to="/main" className={funcActive}>
+                                <NavLink onClick={changeMenu.bind(null, false)} to="/dekanat" className={funcActive}>
                                     <div className={`${styles.link} flex color-light gap-3`}>
                                         <div style={{ width: '25px' }} className="flex justify-content-center align-items-center">
                                             <i className="fa-solid fa-building-columns" />
@@ -59,14 +59,16 @@ const Navigation: React.FC<INavigationProps> = ({ isNavigation, changeMenu, logo
                             </div>
                         </NavLink>
                     ) : null}
-                    <NavLink onClick={changeMenu.bind(null, false)} to="/pay" className={({ isActive }) => (isActive ? styles.active_link : '')}>
-                        <div className={`${styles.link}  mt-2 flex color-light gap-3`}>
-                            <div style={{ width: '25px' }} className="flex justify-content-center align-items-center">
-                                <i className="fa-sharp fa-solid fa-file-word" />
+                    {id_role == 2 ? (
+                        <NavLink onClick={changeMenu.bind(null, false)} to="/pay" className={({ isActive }) => (isActive ? styles.active_link : '')}>
+                            <div className={`${styles.link}  mt-2 flex color-light gap-3`}>
+                                <div style={{ width: '25px' }} className="flex justify-content-center align-items-center">
+                                    <i className="fa-sharp fa-solid fa-file-word" />
+                                </div>
+                                Оплата нб
                             </div>
-                            Оплата нб
-                        </div>
-                    </NavLink>
+                        </NavLink>
+                    ) : null}
                     <div style={{ cursor: 'pointer' }} onClick={logout} className={`${styles.link}  mt-2 flex color-light gap-3`}>
                         <i className="fa-solid fa-right-from-bracket" />
                         Выход

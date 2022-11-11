@@ -21,6 +21,6 @@ i18next
             escapeValue: false
         },
         backend: {
-            loadPath: window.location.host.includes('localhost') ? '/locales/{{lng}}/translation.json' : '/vm/locales/{{lng}}/translation.json'
+            loadPath: '/{{lng}}/translation.json'
         }
     })

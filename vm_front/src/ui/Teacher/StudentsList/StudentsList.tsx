@@ -39,7 +39,7 @@ const StudentsList: React.FC<IStudentsListProps> = ({ index, item, setStudent, g
                     placeholder="---"
                     options={
                         item.status_upd
-                            ? grade.map(i => ({
+                            ? grade?.map(i => ({
                                   value: i.id_otsenka,
                                   label: i.otsenka
                               }))

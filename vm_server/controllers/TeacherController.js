@@ -128,8 +128,8 @@ class TeacherController {
                                                                 @visitDate = '${visitDate}',
                                                                 @id_vid_zaniatiy = ${id_vid_zaniatiy},
                                                                 @timesCount = ${timesCount},
-                                                                @groupSubgroup = ${subgroup},
-                                                                @subgroup = ${subgroup}
+                                                                @groupSubgroup = ${subgroup ? subgroup : 0},
+                                                                @subgroup = ${subgroup ? subgroup : 0}
     `);
 
             res.status(200).json({
@@ -151,8 +151,12 @@ class TeacherController {
 
     async getOtsenka(req, res) {
         try {
+            const { role, date } = req.body;
             const pool = await poolPromise();
-            const { recordset } = await pool.query(`exec LMS_Otsenka_select`);
+            const { recordset } = await pool.query(`exec LMS_Otsenka_select
+                                                                        @role = ${role},
+                                                                        @date = '${date}'
+                                                                        `);
 
             res.status(200).json({
                 message: 'Данные успешно получены',
@@ -240,7 +244,7 @@ class TeacherController {
                                                 ,@id_time = -1
                                                 ,@id_otsenka = ${id_otsenka}
                                                 ,@typeGroup = ${typeGroup ? typeGroup : 0}
-                                                ,@supgroup = ${subgroup}
+                                                ,@supgroup = ${subgroup ? subgroup : 0}
             `);
 
             res.status(200).json({

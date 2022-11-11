@@ -1,5 +1,9 @@
-import { IRes } from '../../models/IModels'
-import { valueType } from '../../components/SelectCustom/ISelect'
+import { valueType } from '../../../../components/SelectCustom/ISelect'
+import { IRes } from '../../../../models/IModels'
+
+export interface IDekanatProps {
+    showModal: () => void
+}
 
 export interface IValueSelects {
     v_year: valueType

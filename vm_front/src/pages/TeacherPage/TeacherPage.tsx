@@ -1,5 +1,5 @@
 import React from 'react'
-import { Loader } from '../../components'
+import { Loader, Tabs } from '../../components'
 import { useTypeSelector } from '../../hooks/useTypeSelector'
 import { valueType } from '../../components/SelectCustom/ISelect'
 import { IDiscipline, IGroups, ILoader, IGrade, ISemester, IStudentList, ISubgroupStudent, IValueSelects, IVidZanyatie } from './ITeacher'
@@ -9,11 +9,14 @@ import { IRes } from '../../models/IModels'
 import { SelectsTeacher, StudentsList } from '../../ui'
 import { JournalReport } from '../../reportPages'
 import dayjs from 'dayjs'
+import styles from '../MainPage/styles.module.scss'
+import { teacherDataTab } from '../../config/data'
 
 const TeacherPage: React.FC = () => {
     const { request } = useHttp()
+    const [isPage, setIsPage] = React.useState<number>(1)
     const toast = useMessage()
-    const { id_user } = useTypeSelector(state => state.authReducer)
+    const { id_user, id_role } = useTypeSelector(state => state.authReducer)
     const [disciplines, setDisciplines] = React.useState<IDiscipline[]>([])
     const [discipline, setDiscipline] = React.useState<IDiscipline>()
     const [semester, setSemester] = React.useState<ISemester[]>([])
@@ -175,7 +178,6 @@ const TeacherPage: React.FC = () => {
             v_vid_zanyatie: v,
             v_sub_group: { value: null, label: '' },
             v_type_group: { value: null, label: '' },
-            date: '',
             v_otsenka: { value: null, label: '' },
             v_amount: { value: null, label: '' }
         })
@@ -185,7 +187,7 @@ const TeacherPage: React.FC = () => {
     }
 
     const changeAmount = (v: valueType) => {
-        setValueSelects({ ...valueSelects, v_amount: v })
+        setValueSelects({ ...valueSelects, v_amount: v, v_type_group: { value: null, label: '' } })
         if (studentList.length) {
             setStudentList([])
         }
@@ -204,7 +206,7 @@ const TeacherPage: React.FC = () => {
             v_type_group: { value: null, label: '' },
             v_otsenka: { value: null, label: '' }
         })
-        getOtsenka()
+        getOtsenka(d2)
         if (studentList.length) {
             setStudentList([])
         }
@@ -219,14 +221,13 @@ const TeacherPage: React.FC = () => {
             ...valueSelects,
             v_type_group: v,
             v_sub_group: { value: null, label: '' },
-            v_otsenka: { value: null, label: '' },
-            v_amount: { value: null, label: '' }
+            v_otsenka: { value: null, label: '' }
         })
         getStudentList()
     }
 
     const changeSubGroup = (v: valueType) => {
-        setValueSelects({ ...valueSelects, v_sub_group: v, v_otsenka: { value: null, label: '' }, v_amount: { value: null, label: '' } })
+        setValueSelects({ ...valueSelects, v_sub_group: v, v_otsenka: { value: null, label: '' } })
         getStudentList(v.value)
     }
 
@@ -275,8 +276,12 @@ const TeacherPage: React.FC = () => {
         setLoader({ ...loader, student: false })
     }
 
-    const getOtsenka = async () => {
-        const { data } = await request('/teacher/otsenka')
+    const getOtsenka = async (date: string) => {
+        // const { data } = await request(`/teacher/otsenka?role=${id_role}&date=${dayjs(new Date()).format('YYYY-MM-DD')}`)
+        const { data } = await request('/teacher/get-otsenka', 'POST', {
+            role: id_role,
+            date
+        })
         setGrade(data)
     }
 
@@ -314,7 +319,7 @@ const TeacherPage: React.FC = () => {
 
     const PostEveryoneWasPresent = async () => {
         const { v_type_group, v_sub_group } = valueSelects
-        const { timesCount, id_vid_zaniatiy, id_discipline, id_semesterOrWs, id_groupOrPorok, id_group, isVisited, visitDate, id_a_year, kredits } =
+        const { timesCount, id_vid_zaniatiy, id_discipline, id_semesterOrWs, id_groupOrPorok, isVisited, visitDate, id_a_year, kredits } =
             studentList[0]
         const { message, type }: IRes = await request('/teacher/otsenka', 'POST', {
             id_teacher: id_user,
@@ -332,6 +337,7 @@ const TeacherPage: React.FC = () => {
             subgroup: v_sub_group.value
         })
         toast(message, type)
+        getStudentList()
     }
 
     const postSubGroupStudent = async (id_student: number | null, subgroup: number | string | null, studentSubgroup: null | number) => {
@@ -360,6 +366,7 @@ const TeacherPage: React.FC = () => {
     const hideModal = () => {
         document.body.style.overflowY = 'visible'
         setIsModal(false)
+        setSubgroupStudents([])
         const { v_sub_group } = valueSelects
 
         if (v_sub_group.value) {
@@ -375,11 +382,13 @@ const TeacherPage: React.FC = () => {
         }
     }, [years])
 
-    const back = () => {
-        const { v_sub_group } = valueSelects
-        setIsReport(false)
-        getStudentList(v_sub_group.value)
-    }
+    // React.useEffect(() => {
+    //     if (ws.length) {
+    //         // @ts-ignore
+    //         const { ws: a, id_ws }: IWs = ws.find(item => item.defaultValue == 1)
+    //         setValueSelects({ ...valueSelects, v_ws: { value: id_ws, label: a } })
+    //     }
+    // }, [ws])
 
     if (isReport) {
         return (
@@ -394,13 +403,16 @@ const TeacherPage: React.FC = () => {
                 idGroup={valueSelects.v_group.value}
                 idVidZanyatie={valueSelects.v_vid_zanyatie.value}
                 idWs={valueSelects.v_ws.value}
-                back={back}
+                back={setIsReport.bind(null, false)}
             />
         )
     }
 
     return (
         <>
+            <div className={styles.tab}>
+                <Tabs isPage={isPage} data={teacherDataTab} changePage={setIsPage} />
+            </div>
             <SelectsTeacher
                 ws={ws}
                 years={years}

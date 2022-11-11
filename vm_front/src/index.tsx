@@ -6,7 +6,7 @@ import App from './App'
 import { store } from './redux/store'
 import 'react-toastify/dist/ReactToastify.css'
 import './styles/styles.scss'
-import './i18n'
+// import './i18n'
 import { Loader } from './components'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
@@ -16,8 +16,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
             <div className="vh-100 flex justify-content-center align-items-center">
                 <Loader />
             </div>
-        }
-    >
+        }>
         <Provider store={store}>
             <BrowserRouter>
                 <App />
