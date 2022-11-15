@@ -1,4 +1,4 @@
-import { ISubgroupStudent } from '../../../pages/TeacherPage/ITeacher'
+import { ISubgroupStudent } from '../Teacher/ITeacher'
 
 export interface IRenderSubGroupProps {
     index: number

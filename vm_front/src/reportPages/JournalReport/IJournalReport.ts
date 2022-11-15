@@ -1,4 +1,4 @@
-import { IGroups, IVidZanyatie } from '../../pages/TeacherPage/ITeacher'
+import { IGroups, IVidZanyatie } from '../../ui/Teacher/Teacher/ITeacher'
 
 export interface IJournalReportProps {
     credit?: number

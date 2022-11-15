@@ -2,7 +2,6 @@ import { valueType } from '../../components/SelectCustom/ISelect'
 
 export interface IValueSelect {
     v_year: valueType
-    v_ws: valueType
     v_semester: valueType
     v_teacher: valueType
 }

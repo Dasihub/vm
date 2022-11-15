@@ -13,5 +13,7 @@ router.post('/get-otsenka', TeacherController.getOtsenka);
 router.put('/otsenka', TeacherController.updateOtsenka);
 router.post('/otsenka', TeacherController.postOtsenko);
 router.post('/subgroup', TeacherController.postSubGroup);
+router.post('/search-student', TeacherController.searchJournal);
+router.get('/search-student-detail', TeacherController.searchJournalDetails);
 
 module.exports = router;

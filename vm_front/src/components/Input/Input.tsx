@@ -17,7 +17,8 @@ const Input: React.FC<IInputProps> = ({
     type = 'text',
     maxLength,
     min,
-    max
+    max,
+    style
 }) => {
     return (
         <>
@@ -42,6 +43,7 @@ const Input: React.FC<IInputProps> = ({
                     maxLength={maxLength}
                     min={min}
                     max={max}
+                    style={style}
                     type={type == 'password' ? (isPassword ? 'text' : 'password') : type}
                 />
                 {type == 'password' ? (

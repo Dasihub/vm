@@ -34,6 +34,9 @@ export const authSlice = createSlice({
         //id role Деконат = 3
         role3: state => {
             state.id_role = 3
+        },
+        role1: state => {
+            state.id_role = 1
         }
     },
     extraReducers: {}

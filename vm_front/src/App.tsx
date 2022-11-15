@@ -31,7 +31,7 @@ const App: React.FC = () => {
         const { auth, data }: IResAuth = await request('/auth/check')
         setMainLoader(false)
         if (auth) {
-            return dispatch(
+            dispatch(
                 accessAuth({
                     id_role: data.id_role,
                     id_avn_user: data.id_avn_user,
@@ -48,6 +48,7 @@ const App: React.FC = () => {
         const { message, type }: IRes = await request('/auth/logout')
         toast(message, type)
         dispatch(clearData())
+        setAccess(null)
         if (isNavigation) {
             setIsNavigation(false)
         }
@@ -114,7 +115,7 @@ const App: React.FC = () => {
             <ToastContainer />
             <Header changeMenu={changeMenu} isNavigation={isNavigation} />
             {isAuth && <Navigation access={access} logout={logout} changeMenu={changeMenu} isNavigation={isNavigation} />}
-            <Router />
+            <Router access={access} />
         </>
     )
 }

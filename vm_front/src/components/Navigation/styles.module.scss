@@ -8,22 +8,13 @@
     padding: 10px;
     overflow-x: hidden;
     transition: 0.5s;
-    z-index: 2;
+    z-index: 3;
     max-height: calc(100vh - 60px);
 
     nav {
         overflow-y: auto;
         max-height: calc(100vh - 60px);
     }
-
-
-    //&:hover {
-    //    width: 240px;
-    //
-    //    .link {
-    //        width: 210px;
-    //    }
-    //}
 }
 
 .active_link {
@@ -61,7 +52,7 @@
     left: 0;
     width: 100%;
     height: 100vh;
-    z-index: 1;
+    z-index: 2;
 }
 
 @media (min-width: 1440px) {

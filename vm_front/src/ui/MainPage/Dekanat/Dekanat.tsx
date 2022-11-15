@@ -1,7 +1,7 @@
 import React from 'react'
-import { useHttp } from '../../../../hooks/useHttp'
-import { useTypeDispatch } from '../../../../hooks/useTypeDispatch'
-import { useTypeSelector } from '../../../../hooks/useTypeSelector'
+import { useHttp } from '../../../hooks/useHttp'
+import { useTypeDispatch } from '../../../hooks/useTypeDispatch'
+import { useTypeSelector } from '../../../hooks/useTypeSelector'
 import {
     IDekanatProps,
     IDirection,
@@ -16,11 +16,11 @@ import {
     IVidZanyatie
 } from './IDekanat'
 import dayjs from 'dayjs'
-import { valueType } from '../../../../components/SelectCustom/ISelect'
-import { fetchJurnal } from '../../../../redux/action/jurnalAction'
+import { valueType } from '../../../components/SelectCustom/ISelect'
+import { fetchJurnal } from '../../../redux/action/jurnalAction'
 import styles from './styles.module.scss'
-import { Loader, SelectCustom } from '../../../../components'
-import { Students } from '../../../index'
+import { Loader, SelectCustom } from '../../../components'
+import { Students } from '../../index'
 
 const Dekanat: React.FC<IDekanatProps> = ({ showModal }) => {
     const { request } = useHttp()
@@ -35,6 +35,10 @@ const Dekanat: React.FC<IDekanatProps> = ({ showModal }) => {
     const [specialities, setSpecialities] = React.useState<ISpecialities[]>([])
     const [groups, setGroups] = React.useState<IGroups[]>([])
     const [vidZanyatie, setVidZanyatie] = React.useState<IVidZanyatie[]>([])
+    const [valueWs, setValueWs] = React.useState<valueType>({
+        value: null,
+        label: ''
+    })
     const [students, setStudents] = React.useState<IStudents[]>([])
     const [isLoader, setIsLoader] = React.useState<ILoader>({
         feduc: false,
@@ -48,7 +52,6 @@ const Dekanat: React.FC<IDekanatProps> = ({ showModal }) => {
     })
     const [valueSelects, setValueSelects] = React.useState<IValueSelects>({
         v_year: { value: null, label: '' },
-        v_ws: { value: null, label: '' },
         v_semester: { value: null, label: '' },
         v_faculty: { value: null, label: '' },
         v_feduc: { value: null, label: '' },
@@ -62,7 +65,6 @@ const Dekanat: React.FC<IDekanatProps> = ({ showModal }) => {
     const changeYear = (v: valueType) => {
         setValueSelects({
             v_year: v,
-            v_ws: { value: null, label: '' },
             v_semester: { value: null, label: '' },
             v_faculty: { value: null, label: '' },
             v_feduc: { value: null, label: '' },
@@ -72,6 +74,7 @@ const Dekanat: React.FC<IDekanatProps> = ({ showModal }) => {
             v_vid_zanyatie: { value: null, label: '' },
             v_date: dayjs(new Date()).format('YYYY-MM-DD')
         })
+        setValueWs({ value: null, label: '' })
         if (students.length) {
             setStudents([])
         }
@@ -99,18 +102,7 @@ const Dekanat: React.FC<IDekanatProps> = ({ showModal }) => {
     }
 
     const changeWs = (v: valueType) => {
-        setValueSelects({
-            ...valueSelects,
-            v_ws: v,
-            v_semester: { value: null, label: '' },
-            v_faculty: { value: null, label: '' },
-            v_feduc: { value: null, label: '' },
-            v_direction: { value: null, label: '' },
-            v_speciality: { value: null, label: '' },
-            v_group: { value: null, label: '' },
-            v_vid_zanyatie: { value: null, label: '' },
-            v_date: dayjs(new Date()).format('YYYY-MM-DD')
-        })
+        setValueWs(v)
         if (semester.length) {
             setSemester([])
         }
@@ -355,9 +347,9 @@ const Dekanat: React.FC<IDekanatProps> = ({ showModal }) => {
 
     const getStudents = async (id_vid_zaniatiy: number | null | string) => {
         setIsLoader({ ...isLoader, student: true })
-        const { v_year, v_ws, v_semester, v_faculty, v_feduc, v_group } = valueSelects
+        const { v_year, v_semester, v_faculty, v_feduc, v_group } = valueSelects
         const { data } = await request(
-            `/dekanat/students/?id_year=${v_year.value}&id_ws=${v_ws.value}&id_semester=${v_semester.value}&id_faculty=${v_faculty.value}&id_f_educ=${v_feduc.value}&id_group=${v_group.value}&id_vid_zaniatiy=${id_vid_zaniatiy}`
+            `/dekanat/students/?id_year=${v_year.value}&id_ws=${valueWs.value}&id_semester=${v_semester.value}&id_faculty=${v_faculty.value}&id_f_educ=${v_feduc.value}&id_group=${v_group.value}&id_vid_zaniatiy=${id_vid_zaniatiy}`
         )
         setIsLoader({ ...isLoader, student: false })
         setStudents(data)
@@ -376,12 +368,19 @@ const Dekanat: React.FC<IDekanatProps> = ({ showModal }) => {
             setValueSelects({ ...valueSelects, v_year: { value: id_a_year, label: p32 } })
         }
     }, [years])
+
+    React.useEffect(() => {
+        if (ws.length) {
+            // @ts-ignore
+            const { id_ws, ws: a } = ws.find(item => item.defaultValue == 1)
+            setValueWs({ value: id_ws, label: a })
+            getSemester(id_ws)
+        }
+    }, [ws])
     return (
         <>
             <div className="box_container">
-                <h2 className="text-center ">Деканат</h2>
-
-                <div className={`${styles.container} mt-2`}>
+                <div className={styles.container}>
                     <div className="w-100">
                         <SelectCustom
                             placeholder="Учебный год"
@@ -396,7 +395,7 @@ const Dekanat: React.FC<IDekanatProps> = ({ showModal }) => {
                         <SelectCustom
                             placeholder="Полугодие"
                             label="Полугодие"
-                            value={valueSelects.v_ws.value ? valueSelects.v_ws : ''}
+                            value={valueWs ? valueWs : ''}
                             options={
                                 valueSelects.v_year.value
                                     ? ws.map(item => ({
@@ -416,7 +415,7 @@ const Dekanat: React.FC<IDekanatProps> = ({ showModal }) => {
                             label="Семестр"
                             value={valueSelects.v_semester.value ? valueSelects.v_semester : ''}
                             options={
-                                valueSelects.v_ws.value
+                                valueWs.value
                                     ? semester.map(item => ({
                                           value: item.id_semester,
                                           label: item.semester
@@ -425,7 +424,7 @@ const Dekanat: React.FC<IDekanatProps> = ({ showModal }) => {
                             }
                             onChange={changeSemester}
                             loader={isLoader.semester}
-                            isDisabled={!valueSelects.v_ws.value}
+                            isDisabled={!valueWs.value}
                         />
                     </div>
                     <div className="w-100">

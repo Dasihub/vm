@@ -1,5 +1,5 @@
-import { valueType } from '../../../../components/SelectCustom/ISelect'
-import { IRes } from '../../../../models/IModels'
+import { valueType } from '../../../components/SelectCustom/ISelect'
+import { IRes } from '../../../models/IModels'
 
 export interface IDekanatProps {
     showModal: () => void
@@ -7,7 +7,6 @@ export interface IDekanatProps {
 
 export interface IValueSelects {
     v_year: valueType
-    v_ws: valueType
     v_semester: valueType
     v_faculty: valueType
     v_feduc: valueType

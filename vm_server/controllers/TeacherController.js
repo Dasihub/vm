@@ -369,6 +369,71 @@ class TeacherController {
             });
         }
     }
+
+    async searchJournal(req, res) {
+        try {
+            const { value, id_year, id_ws, id_role, id_avn_user, id_user } = req.body;
+
+            const pool = await poolPromise();
+            const { recordset } = await pool.query(`
+                                            exec SP_jurnal_find
+                                                @id_a_year = ${id_year},
+                                                @id_w_s = ${id_ws},
+                                                @s_fio= '${value}',
+                                                @id_role = ${id_role},
+                                                @id_avn_user = ${id_avn_user},
+                                                @id_user= ${id_user}
+          `);
+
+            res.status(200).json({
+                message: 'Данные успешно получены',
+                type: 'success',
+                data: recordset,
+                auth: true,
+            });
+        } catch (e) {
+            console.log(e);
+            res.status(500).json({
+                message: req.t('error'),
+                type: 'error',
+                data: [],
+                auth: false,
+            });
+        }
+    }
+
+    async searchJournalDetails(req, res) {
+        try {
+            const { id_year, id_ws, id_group, id_role, id_avn_user, id_user, id_student } = req.query;
+
+            const pool = await poolPromise();
+            const { recordset } = await pool.query(`
+                                            exec SP_jurnal_find_detal
+                                                        @id_a_year = ${id_year},
+                                                        @id_w_s = ${id_ws},
+                                                        @id_group = ${id_group},
+                                                        @id_student = ${id_student},
+                                                        @id_role = ${id_role},
+                                                        @id_avn_user = ${id_avn_user},
+                                                        @id_user = ${id_user}
+          `);
+
+            res.status(200).json({
+                message: 'Данные успешно получены',
+                type: 'success',
+                data: recordset,
+                auth: true,
+            });
+        } catch (e) {
+            console.log(e);
+            res.status(500).json({
+                message: req.t('error'),
+                type: 'error',
+                data: [],
+                auth: false,
+            });
+        }
+    }
 }
 
 module.exports = new TeacherController();

@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react'
+import { ChangeEvent, CSSProperties } from 'react'
 
 export interface IInputProps {
     value: string
@@ -11,9 +11,10 @@ export interface IInputProps {
     isPassword?: boolean
     required?: boolean
     className?: string
-    type?: 'text' | 'date' | 'password' | 'number' | 'file'
+    type?: 'text' | 'date' | 'password' | 'number' | 'file' | 'search'
     changeIsPassword?: () => void
     maxLength?: number
     min?: string
     max?: string
+    style?: CSSProperties
 }

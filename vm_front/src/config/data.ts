@@ -35,6 +35,6 @@ export const dekanatDataTab: typeTab[] = [
 ]
 
 export const teacherDataTab: typeTab[] = [
-    { title: 'Поиск студентов', id: 1 },
-    { title: 'Преподователь', id: 2 }
+    { title: 'Преподователь', id: 1 },
+    { title: 'Поиск студентов', id: 2 }
 ]

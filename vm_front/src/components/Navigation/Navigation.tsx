@@ -5,6 +5,7 @@ import { authSlice } from '../../redux/reducers/AuthSlice'
 import { Avatar } from '../../img'
 import { INavigationProps } from './INavigation'
 import { useTypeSelector } from '../../hooks/useTypeSelector'
+import { Exit, Square } from '../../icons'
 
 const Navigation: React.FC<INavigationProps> = ({ isNavigation, changeMenu, logout, access }) => {
     const { surname, name } = useTypeSelector(state => state.userInfoReducer)
@@ -33,7 +34,7 @@ const Navigation: React.FC<INavigationProps> = ({ isNavigation, changeMenu, logo
                                 <NavLink onClick={changeMenu.bind(null, false)} to="/dekanat" className={funcActive}>
                                     <div className={`${styles.link} flex color-light gap-3`}>
                                         <div style={{ width: '25px' }} className="flex justify-content-center align-items-center">
-                                            <i className="fa-solid fa-building-columns" />
+                                            <img src={Square} alt="square" />
                                         </div>
                                         Деканат
                                     </div>
@@ -42,7 +43,7 @@ const Navigation: React.FC<INavigationProps> = ({ isNavigation, changeMenu, logo
                             <NavLink onClick={changeMenu.bind(null, false)} to="/teacher" className={funcActive}>
                                 <div className={`${styles.link}  mt-2 flex color-light gap-3`}>
                                     <div style={{ width: '25px' }} className="flex justify-content-center align-items-center">
-                                        <i className="fa-solid fa-chalkboard-user" />
+                                        <img src={Square} alt="square" />
                                     </div>
                                     Преподаватель
                                 </div>
@@ -50,27 +51,38 @@ const Navigation: React.FC<INavigationProps> = ({ isNavigation, changeMenu, logo
                         </>
                     ) : null}
                     {id_role == 2 ? (
-                        <NavLink onClick={changeMenu.bind(null, false)} to="/student" className={funcActive}>
-                            <div className={`${styles.link}  mt-2 flex color-light gap-3`}>
-                                <div style={{ width: '25px' }} className="flex justify-content-center align-items-center">
-                                    <i className="fa-solid fa-graduation-cap" />
+                        <>
+                            <NavLink onClick={changeMenu.bind(null, false)} to="/passes" className={funcActive}>
+                                <div className={`${styles.link}  mt-2 flex color-light gap-3`}>
+                                    <div style={{ width: '25px' }} className="flex justify-content-center align-items-center">
+                                        <img src={Square} alt="square" />
+                                    </div>
+                                    Пропуски
                                 </div>
-                                Студент
-                            </div>
-                        </NavLink>
-                    ) : null}
-                    {id_role == 2 ? (
-                        <NavLink onClick={changeMenu.bind(null, false)} to="/pay" className={({ isActive }) => (isActive ? styles.active_link : '')}>
-                            <div className={`${styles.link}  mt-2 flex color-light gap-3`}>
-                                <div style={{ width: '25px' }} className="flex justify-content-center align-items-center">
-                                    <i className="fa-sharp fa-solid fa-file-word" />
+                            </NavLink>
+                            <NavLink onClick={changeMenu.bind(null, false)} to="/student" className={funcActive}>
+                                <div className={`${styles.link}  mt-2 flex color-light gap-3`}>
+                                    <div style={{ width: '25px' }} className="flex justify-content-center align-items-center">
+                                        <img src={Square} alt="square" />
+                                    </div>
+                                    Журнал
                                 </div>
-                                Оплата нб
-                            </div>
-                        </NavLink>
+                            </NavLink>
+                            <NavLink
+                                onClick={changeMenu.bind(null, false)}
+                                to="/pay"
+                                className={({ isActive }) => (isActive ? styles.active_link : '')}>
+                                <div className={`${styles.link}  mt-2 flex color-light gap-3`}>
+                                    <div style={{ width: '25px' }} className="flex justify-content-center align-items-center">
+                                        <img src={Square} alt="square" />
+                                    </div>
+                                    Оплата нб
+                                </div>
+                            </NavLink>
+                        </>
                     ) : null}
                     <div style={{ cursor: 'pointer' }} onClick={logout} className={`${styles.link}  mt-2 flex color-light gap-3`}>
-                        <i className="fa-solid fa-right-from-bracket" />
+                        <img src={Exit} alt="exit" />
                         Выход
                     </div>
                 </nav>
