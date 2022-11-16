@@ -30,30 +30,21 @@ const Input: React.FC<IInputProps> = ({
                     <br />
                 </>
             )}
-            <div className="position-relative" style={{ width: '100%', marginTop: '5px' }}>
-                <input
-                    value={value}
-                    className={`${styles.input} ${className}`}
-                    name={name}
-                    readOnly={readOnly}
-                    id={id}
-                    placeholder={placeholder}
-                    onChange={onChange}
-                    required={required}
-                    maxLength={maxLength}
-                    min={min}
-                    max={max}
-                    style={style}
-                    type={type == 'password' ? (isPassword ? 'text' : 'password') : type}
-                />
-                {type == 'password' ? (
-                    isPassword ? (
-                        <i onClick={changeIsPassword} className={`fa-sharp fa-solid fa-eye ${styles.i} color-primary position-absolute`}></i>
-                    ) : (
-                        <i onClick={changeIsPassword} className={`fa-sharp fa-solid fa-eye-slash ${styles.i} color-primary position-absolute`}></i>
-                    )
-                ) : null}
-            </div>
+            <input
+                value={value}
+                className={`${styles.input} ${className}`}
+                name={name}
+                readOnly={readOnly}
+                id={id}
+                placeholder={placeholder}
+                onChange={onChange}
+                required={required}
+                maxLength={maxLength}
+                min={min}
+                max={max}
+                style={style}
+                type={type == 'password' ? (isPassword ? 'text' : 'password') : type}
+            />
         </>
     )
 }

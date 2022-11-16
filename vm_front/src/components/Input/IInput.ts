@@ -1,7 +1,7 @@
 import { ChangeEvent, CSSProperties } from 'react'
 
 export interface IInputProps {
-    value: string
+    value?: string
     onChange: (e: ChangeEvent<HTMLInputElement>) => void
     placeholder?: string
     id?: string
@@ -11,10 +11,11 @@ export interface IInputProps {
     isPassword?: boolean
     required?: boolean
     className?: string
-    type?: 'text' | 'date' | 'password' | 'number' | 'file' | 'search'
+    type?: 'text' | 'date' | 'password' | 'number' | 'file' | 'search' | 'checkbox'
     changeIsPassword?: () => void
     maxLength?: number
     min?: string
     max?: string
     style?: CSSProperties
+    checked?: boolean
 }

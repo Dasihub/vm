@@ -129,7 +129,10 @@ const SearchStudent: React.FC = () => {
                     <td className="text-center">{item.short_name}</td>
                     <td className="text-center">{item.visitDate}</td>
                     <td className="text-center">{item.otsenka}</td>
-                    <td className="text-center">{item.statusUpd ? <img style={{ cursor: 'pointer' }} src={Pencil} alt="pencil" /> : null}</td>
+                    <td className="text-center">{item.working_off}</td>
+                    <td className="text-center">
+                        {item.statusUpd ? <img style={{ cursor: 'pointer' }} src={Pencil} alt="pencil" /> : null}
+                    </td>
                 </tr>
             ))
         }
@@ -142,7 +145,10 @@ const SearchStudent: React.FC = () => {
                     <td className="text-center">{item.short_name}</td>
                     <td className="text-center">{item.visitDate}</td>
                     <td className="text-center">{item.otsenka}</td>
-                    <td className="text-center">{item.statusUpd ? <img style={{ cursor: 'pointer' }} src={Pencil} alt="pencil" /> : null}</td>
+                    <td className="text-center">{item.working_off}</td>
+                    <td className="text-center">
+                        {item.statusUpd ? <img style={{ cursor: 'pointer' }} src={Pencil} alt="pencil" /> : null}
+                    </td>
                 </tr>
             ))
         }
@@ -153,7 +159,10 @@ const SearchStudent: React.FC = () => {
                 <td className="text-center">{item.short_name}</td>
                 <td className="text-center">{item.visitDate}</td>
                 <td className="text-center">{item.otsenka}</td>
-                <td className="text-center">{item.statusUpd ? <img style={{ cursor: 'pointer' }} src={Pencil} alt="pencil" /> : null}</td>
+                <td className="text-center">{item.working_off}</td>
+                <td className="text-center">
+                    {item.statusUpd ? <img style={{ cursor: 'pointer' }} src={Pencil} alt="pencil" /> : null}
+                </td>
             </tr>
         ))
     }, [studentDetails, filterDetail])
@@ -239,20 +248,32 @@ const SearchStudent: React.FC = () => {
                             </thead>
                             <tbody>
                                 {student.map((item, index) => (
-                                    <tr style={{ cursor: 'pointer' }} onClick={getStudentDetails.bind(null, item.id_student, item.id_group)}>
+                                    <tr
+                                        style={{ cursor: 'pointer' }}
+                                        onClick={getStudentDetails.bind(null, item.id_student, item.id_group)}>
                                         <td
-                                            style={item.id_student == idStudent ? { backgroundColor: '#5488FF', color: 'white' } : {}}
+                                            style={
+                                                item.id_student == idStudent
+                                                    ? { backgroundColor: '#5488FF', color: 'white' }
+                                                    : {}
+                                            }
                                             className="text-center">
                                             {index + 1}
                                         </td>
                                         <td
                                             style={
-                                                item.id_student == idStudent ? { backgroundColor: '#5488FF', color: 'white', paddingLeft: '5px' } : {}
+                                                item.id_student == idStudent
+                                                    ? { backgroundColor: '#5488FF', color: 'white', paddingLeft: '5px' }
+                                                    : {}
                                             }>
                                             {item.s_fio}
                                         </td>
                                         <td
-                                            style={item.id_student == idStudent ? { backgroundColor: '#5488FF', color: 'white' } : {}}
+                                            style={
+                                                item.id_student == idStudent
+                                                    ? { backgroundColor: '#5488FF', color: 'white' }
+                                                    : {}
+                                            }
                                             className="text-center">
                                             {item.rate} {item.groups} {item.faculty}
                                         </td>
@@ -274,7 +295,12 @@ const SearchStudent: React.FC = () => {
                             <div
                                 style={
                                     filterDetail == 'Лк'
-                                        ? { fontSize: '12px', fontWeight: 'bold', textDecoration: 'underline', cursor: 'pointer' }
+                                        ? {
+                                              fontSize: '12px',
+                                              fontWeight: 'bold',
+                                              textDecoration: 'underline',
+                                              cursor: 'pointer'
+                                          }
                                         : { fontSize: '12px', cursor: 'pointer' }
                                 }
                                 onClick={setFilterDetail.bind(null, 'Лк')}>
@@ -283,7 +309,12 @@ const SearchStudent: React.FC = () => {
                             <div
                                 style={
                                     filterDetail == 'Пр'
-                                        ? { fontSize: '12px', fontWeight: 'bold', textDecoration: 'underline', cursor: 'pointer' }
+                                        ? {
+                                              fontSize: '12px',
+                                              fontWeight: 'bold',
+                                              textDecoration: 'underline',
+                                              cursor: 'pointer'
+                                          }
                                         : { fontSize: '12px', cursor: 'pointer' }
                                 }
                                 onClick={setFilterDetail.bind(null, 'Пр')}>
@@ -292,7 +323,12 @@ const SearchStudent: React.FC = () => {
                             <div
                                 style={
                                     filterDetail == 'Лб'
-                                        ? { fontSize: '12px', fontWeight: 'bold', textDecoration: 'underline', cursor: 'pointer' }
+                                        ? {
+                                              fontSize: '12px',
+                                              fontWeight: 'bold',
+                                              textDecoration: 'underline',
+                                              cursor: 'pointer'
+                                          }
                                         : { fontSize: '12px', cursor: 'pointer' }
                                 }
                                 onClick={setFilterDetail.bind(null, 'Лб')}>
@@ -301,13 +337,21 @@ const SearchStudent: React.FC = () => {
                             <div
                                 style={
                                     filterDetail == 'н/б'
-                                        ? { fontSize: '12px', fontWeight: 'bold', textDecoration: 'underline', cursor: 'pointer' }
+                                        ? {
+                                              fontSize: '12px',
+                                              fontWeight: 'bold',
+                                              textDecoration: 'underline',
+                                              cursor: 'pointer'
+                                          }
                                         : { fontSize: '12px', cursor: 'pointer' }
                                 }
                                 onClick={setFilterDetail.bind(null, 'н/б')}>
                                 н/б
                             </div>
-                            <div className="color-danger" style={{ fontSize: '12px', cursor: 'pointer' }} onClick={setFilterDetail.bind(null, '')}>
+                            <div
+                                className="color-danger"
+                                style={{ fontSize: '12px', cursor: 'pointer' }}
+                                onClick={setFilterDetail.bind(null, '')}>
                                 Сбросить
                             </div>
                         </div>
@@ -320,6 +364,7 @@ const SearchStudent: React.FC = () => {
                                     <th className="text-center">Вид занятие</th>
                                     <th className="text-center">Дата</th>
                                     <th className="text-center">Оценка</th>
+                                    <th className="text-center">Тип отработки</th>
                                     <th className="text-center">Действие</th>
                                 </tr>
                             </thead>

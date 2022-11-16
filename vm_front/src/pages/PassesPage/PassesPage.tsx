@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Loader, ModalWindow, SelectCustom } from '../../components'
+import { Button, Input, Loader, ModalWindow, SelectCustom } from '../../components'
 import { valueType } from '../../components/SelectCustom/ISelect'
 import { useHttp } from '../../hooks/useHttp'
 import { useTypeSelector } from '../../hooks/useTypeSelector'
@@ -21,8 +21,17 @@ const PassesPage: React.FC = () => {
         label: ''
     })
     const [journalDetails, setJournalDetails] = React.useState<IStudentsDetails[]>([])
-    const [noData, setNoData] = React.useState<boolean>(false)
+    const [chooseJournal, setChooseJournal] = React.useState<IStudentsDetails[]>([])
     const [isModal, setIsModal] = React.useState<boolean>(false)
+    const [noData, setNoData] = React.useState<boolean>(false)
+
+    console.log(chooseJournal, 'chooseJournal')
+    const choose = (e: React.ChangeEvent<HTMLInputElement>, j: IStudentsDetails) => {
+        if (e.target.checked) {
+            return setChooseJournal(pre => (pre = [...pre, j]))
+        }
+        setChooseJournal(pre => (pre = pre.filter(item => item.id !== j.id)))
+    }
 
     const changeYear = (v: valueType) => {
         setValueYear(v)
@@ -73,7 +82,34 @@ const PassesPage: React.FC = () => {
         <>
             {isModal && (
                 <ModalWindow title="Оформление" hide={hideModal}>
-                    <div></div>
+                    <>
+                        <table className={styles.table}>
+                            <thead>
+                                <tr>
+                                    <th className="text-center">№</th>
+                                    <th className="text-center">Дисциплина</th>
+                                    <th className="text-center">Вид занятие</th>
+                                    <th className="text-center">Дата</th>
+                                    <th className="text-center">Оценка</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {chooseJournal.map((item, index) => (
+                                    <tr key={item.id}>
+                                        <td className="text-center">{index + 1}</td>
+                                        <td className="text-center">{item.discipline}</td>
+                                        <td className="text-center">{item.short_name}</td>
+                                        <td className="text-center">{item.visitDate}</td>
+                                        <td className="text-center">{item.otsenka}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+
+                        <div className="flex justify-content-end mt-2">
+                            <Button value="Квитанция" />
+                        </div>
+                    </>
                 </ModalWindow>
             )}
             <div className="box_container">
@@ -116,23 +152,33 @@ const PassesPage: React.FC = () => {
                                 <th className="text-center">Вид занятие</th>
                                 <th className="text-center">Дата</th>
                                 <th className="text-center">Оценка</th>
+                                <th className="text-center">Тип отработки</th>
                                 <th className="text-center">Действие</th>
                             </tr>
                         </thead>
                         <tbody>
                             {journalDetails.map((item, index) => (
-                                <tr>
+                                <tr key={item.id}>
                                     <td className="text-center">{index + 1}</td>
                                     <td className="text-center">{item.discipline}</td>
                                     <td className="text-center">{item.short_name}</td>
                                     <td className="text-center">{item.visitDate}</td>
                                     <td className="text-center">{item.otsenka}</td>
+                                    <td className="text-center">{item.working_off}</td>
                                     <td className="text-center">
-                                        <input
-                                            type="checkbox"
-                                            style={{ width: '16px', height: '16px', cursor: 'pointer' }}
-                                            checked={!!item.statusUpd}
-                                        />
+                                        {!!item.statusUpd && (
+                                            <Input
+                                                onChange={e => choose(e, item)}
+                                                value={item.id}
+                                                type="checkbox"
+                                                style={{ width: '16px', height: '16px', cursor: 'pointer' }}
+                                            />
+                                            // <input
+                                            //     onChange={choose}
+                                            //     type="checkbox"
+                                            //     style={{ width: '16px', height: '16px', cursor: 'pointer' }}
+                                            // />
+                                        )}
                                     </td>
                                 </tr>
                             ))}

@@ -15,6 +15,7 @@ export interface IStudentsDetails {
     otsenka: string
     t_fio: string
     statusUpd: number
+    working_off: string
 }
 
 export interface ILoader {
