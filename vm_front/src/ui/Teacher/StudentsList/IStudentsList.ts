@@ -1,5 +1,6 @@
 import { valueType } from '../../../components/SelectCustom/ISelect'
-import { IGrade, IStudentList } from '../Teacher/ITeacher'
+import { IGrade } from '../../../models/IGrade'
+import { IStudentList } from '../Teacher/ITeacher'
 
 export interface IStudentsListProps {
     index: number

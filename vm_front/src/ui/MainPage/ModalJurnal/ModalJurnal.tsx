@@ -74,7 +74,13 @@ const ModalJurnal: React.FC<IModalJurnalProps> = ({ hideModal }) => {
                     />
                 </div>
                 <div className="mt-2">
-                    <Input label="Шифр квитанции" placeholder="0" type="number" value={values.cipher} onChange={changeCipherAndDate} />
+                    <Input
+                        label="Шифр квитанции"
+                        placeholder="0"
+                        type="number"
+                        value={values.cipher}
+                        onChange={changeCipherAndDate}
+                    />
                 </div>
                 <div className="mt-2">
                     <Input label="Дата квитанции" type="date" value={values.date} onChange={changeCipherAndDate} />

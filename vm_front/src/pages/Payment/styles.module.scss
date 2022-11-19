@@ -1,0 +1,46 @@
+.table {
+    //border-collapse: collapse;
+    width: 100%;
+    border-collapse: collapse;
+
+    thead {
+        position: sticky;
+        top: 0px;
+        z-index: 1;
+
+        tr {
+            background-color: white;
+
+            th {
+                color: #64748B;
+                //border-bottom: 2px solid #dee2e6;
+                font-size: 15px;
+                padding: 26px;
+            }
+        }
+    }
+
+    tbody {
+        td {
+            padding: 17px 0;
+            background-color: #f9f9f9;
+            border-bottom: 1px solid #E3E8EF;
+            color: #1D1929;
+
+            :last-child {
+                border: none;
+            }
+        }
+    }
+
+    &:not(caption) {
+
+        > * {
+            > * {
+                padding-top: .5rem;
+                padding-bottom: .5rem;
+                background-color: transparent;
+            }
+        }
+    }
+}

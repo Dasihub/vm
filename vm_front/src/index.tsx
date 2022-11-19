@@ -16,7 +16,8 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
             <div className="vh-100 flex justify-content-center align-items-center">
                 <Loader />
             </div>
-        }>
+        }
+    >
         <Provider store={store}>
             <BrowserRouter>
                 <App />

@@ -11,7 +11,7 @@ class JurnalController {
                 message: 'Данные успешно получены',
                 type: 'success',
                 data: recordset,
-                auth: true,
+                auth: true
             })
         } catch (e) {
             console.log(e)
@@ -19,7 +19,7 @@ class JurnalController {
                 message: req.t('error'),
                 type: 'error',
                 data: [],
-                auth: false,
+                auth: false
             })
         }
     }
@@ -34,7 +34,7 @@ class JurnalController {
                 message: 'Данные успешно получены',
                 type: 'success',
                 data: recordset,
-                auth: true,
+                auth: true
             })
         } catch (e) {
             console.log(e)
@@ -42,7 +42,7 @@ class JurnalController {
                 message: req.t('error'),
                 type: 'error',
                 data: [],
-                auth: false,
+                auth: false
             })
         }
     }
@@ -57,7 +57,7 @@ class JurnalController {
                 message: 'Данные успешно получены',
                 type: 'success',
                 data: recordset,
-                auth: true,
+                auth: true
             })
         } catch (e) {
             console.log(e)
@@ -65,7 +65,7 @@ class JurnalController {
                 message: req.t('error'),
                 type: 'error',
                 data: [],
-                auth: false,
+                auth: false
             })
         }
     }

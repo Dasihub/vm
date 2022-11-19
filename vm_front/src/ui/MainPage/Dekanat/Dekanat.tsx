@@ -340,7 +340,9 @@ const Dekanat: React.FC<IDekanatProps> = ({ showModal }) => {
     const getVidZanyatie = async (id_group: number | null | string) => {
         const { v_year, v_semester } = valueSelects
         setIsLoader({ ...isLoader, vid_zanyatie: true })
-        const { data } = await request(`/selectors/vid-zanyatie?id_year=${v_year.value}&id_semester=${v_semester.value}&id_group=${id_group}`)
+        const { data } = await request(
+            `/selectors/vid-zanyatie?id_year=${v_year.value}&id_semester=${v_semester.value}&id_group=${id_group}`
+        )
         setIsLoader({ ...isLoader, vid_zanyatie: false })
         setVidZanyatie(data)
     }

@@ -5,6 +5,7 @@ import wsReducer from './reducers/WsSlice'
 import authReducer from './reducers/AuthSlice'
 import userInfoReducer from './reducers/UserInfoSlice'
 import langReducer from './reducers/LangSlice'
+import isAdmissionReducer from './reducers/IsReportAdmission'
 
 const rootReducer = combineReducers({
     userInfoReducer,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
     authReducer,
     yearReducer,
     wsReducer,
-    langReducer
+    langReducer,
+    isAdmissionReducer
 })
 
 const setupStore = () => {

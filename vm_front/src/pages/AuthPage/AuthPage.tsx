@@ -63,7 +63,11 @@ const AuthPage: React.FC = () => {
                 <form>
                     <h1 className="text-center">Авторизация</h1>
                     <div className={`${styles.content} ${styles.content_first}`}>
-                        <label style={form.login ? { transform: 'translateY(-19px) scale(1.1)' } : {}} htmlFor="login" className={styles.label}>
+                        <label
+                            style={form.login ? { transform: 'translateY(-19px) scale(1.1)' } : {}}
+                            htmlFor="login"
+                            className={styles.label}
+                        >
                             Логин
                         </label>
                         <input
@@ -77,7 +81,11 @@ const AuthPage: React.FC = () => {
                         <i className="fa fa-user" />
                     </div>
                     <div className={styles.content}>
-                        <label style={form.password ? { transform: 'translateY(-19px) scale(1.1)' } : {}} htmlFor="password" className={styles.label}>
+                        <label
+                            style={form.password ? { transform: 'translateY(-19px) scale(1.1)' } : {}}
+                            htmlFor="password"
+                            className={styles.label}
+                        >
                             Пароль
                         </label>
                         <input
@@ -89,7 +97,10 @@ const AuthPage: React.FC = () => {
                             id="password"
                             // placeholder="Пароль"
                         />
-                        <i onClick={setIsPassword.bind(null, !isPassword)} className={`fa-solid ${isPassword ? 'fa-eye' : 'fa-eye-slash'}`} />
+                        <i
+                            onClick={setIsPassword.bind(null, !isPassword)}
+                            className={`fa-solid ${isPassword ? 'fa-eye' : 'fa-eye-slash'}`}
+                        />
                     </div>
                     <button onClick={loginApi} disabled={loader}>
                         {loader ? <Loader sm={true} /> : 'ВХОД'}

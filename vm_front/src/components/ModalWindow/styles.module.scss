@@ -42,8 +42,8 @@
         }
 
         .body {
-            overflow-y: auto;
             max-height: 71vh;
+            position: relative;
         }
     }
 }

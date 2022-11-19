@@ -2,7 +2,16 @@ import React from 'react'
 import Select from 'react-select'
 import { ISelectProps } from './ISelect'
 
-const SelectCustom: React.FC<ISelectProps> = ({ options, placeholder, onChange, value, label, loader, isDisabled, onFocus }) => {
+const SelectCustom: React.FC<ISelectProps> = ({
+    options,
+    placeholder,
+    onChange,
+    value,
+    label,
+    loader,
+    isDisabled,
+    onFocus
+}) => {
     const noOptionsMessage = () => {
         return 'Нет данных'
     }

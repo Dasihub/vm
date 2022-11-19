@@ -8,7 +8,7 @@ export interface IStudents {
 }
 
 export interface IStudentsDetails {
-    id: string
+    id: number
     discipline: string
     short_name: string
     visitDate: string
@@ -16,6 +16,13 @@ export interface IStudentsDetails {
     t_fio: string
     statusUpd: number
     working_off: string
+    price: number
+    shifr: string
+    paymentStatus: string
+    priceDefault: number
+    id_T_StudentJournalVisit_working_off: number
+    id_otsenka: number
+    printer: number
 }
 
 export interface ILoader {
@@ -26,4 +33,11 @@ export interface ILoader {
 export interface INoData {
     student: boolean
     studentDetail: boolean
+}
+
+export interface IWorking {
+    id_T_StudentJournalVisit_working_off: number
+    s_working_off_name: string
+    working_off_name: string
+    working_off_status: number
 }

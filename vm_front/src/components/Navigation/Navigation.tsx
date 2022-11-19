@@ -1,11 +1,12 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import styles from './styles.module.scss'
-import { authSlice } from '../../redux/reducers/AuthSlice'
 import { Avatar } from '../../img'
 import { INavigationProps } from './INavigation'
 import { useTypeSelector } from '../../hooks/useTypeSelector'
 import { Exit, Square } from '../../icons'
+import { access_dekanat, id_role_dekanat, id_role_student, id_role_teacher } from '../../config/roles'
+import { url } from '../../config/url'
 
 const Navigation: React.FC<INavigationProps> = ({ isNavigation, changeMenu, logout, access }) => {
     const { surname, name } = useTypeSelector(state => state.userInfoReducer)
@@ -18,9 +19,6 @@ const Navigation: React.FC<INavigationProps> = ({ isNavigation, changeMenu, logo
         <>
             {isNavigation && <div className={styles.fon} onClick={changeMenu.bind(null, false)} />}
             <div className={isNavigation ? `${styles.links} ${styles.active}` : `${styles.links}`}>
-                {/*<div>*/}
-                {/*    <img className={`${styles.avatar} block m-auto`} src={Avatar} alt="avatar" />*/}
-                {/*</div>*/}
                 <div className="flex justify-content-center">
                     <img src={Avatar} alt="avatar" style={{ borderRadius: '50%', width: '50px' }} />
                 </div>
@@ -28,21 +26,31 @@ const Navigation: React.FC<INavigationProps> = ({ isNavigation, changeMenu, logo
                     {surname} {name}
                 </div>
                 <nav className="mt-2">
-                    {id_role == 1 || id_role == 3 ? (
+                    {id_role == id_role_teacher || id_role == id_role_dekanat ? (
                         <>
-                            {access == 1 ? (
-                                <NavLink onClick={changeMenu.bind(null, false)} to="/dekanat" className={funcActive}>
+                            {access == access_dekanat ? (
+                                <NavLink
+                                    onClick={changeMenu.bind(null, false)}
+                                    to={`${url}/dekanat`}
+                                    className={funcActive}>
                                     <div className={`${styles.link} flex color-light gap-3`}>
-                                        <div style={{ width: '25px' }} className="flex justify-content-center align-items-center">
+                                        <div
+                                            style={{ width: '25px' }}
+                                            className="flex justify-content-center align-items-center">
                                             <img src={Square} alt="square" />
                                         </div>
                                         Деканат
                                     </div>
                                 </NavLink>
                             ) : null}
-                            <NavLink onClick={changeMenu.bind(null, false)} to="/teacher" className={funcActive}>
+                            <NavLink
+                                onClick={changeMenu.bind(null, false)}
+                                to={`${url}/teacher`}
+                                className={funcActive}>
                                 <div className={`${styles.link}  mt-2 flex color-light gap-3`}>
-                                    <div style={{ width: '25px' }} className="flex justify-content-center align-items-center">
+                                    <div
+                                        style={{ width: '25px' }}
+                                        className="flex justify-content-center align-items-center">
                                         <img src={Square} alt="square" />
                                     </div>
                                     Преподаватель
@@ -50,38 +58,48 @@ const Navigation: React.FC<INavigationProps> = ({ isNavigation, changeMenu, logo
                             </NavLink>
                         </>
                     ) : null}
-                    {id_role == 2 ? (
+                    {id_role == id_role_student ? (
                         <>
-                            <NavLink onClick={changeMenu.bind(null, false)} to="/passes" className={funcActive}>
+                            <NavLink onClick={changeMenu.bind(null, false)} to={`${url}/passes`} className={funcActive}>
                                 <div className={`${styles.link}  mt-2 flex color-light gap-3`}>
-                                    <div style={{ width: '25px' }} className="flex justify-content-center align-items-center">
+                                    <div
+                                        style={{ width: '25px' }}
+                                        className="flex justify-content-center align-items-center">
                                         <img src={Square} alt="square" />
                                     </div>
                                     Пропуски
                                 </div>
                             </NavLink>
-                            <NavLink onClick={changeMenu.bind(null, false)} to="/student" className={funcActive}>
-                                <div className={`${styles.link}  mt-2 flex color-light gap-3`}>
-                                    <div style={{ width: '25px' }} className="flex justify-content-center align-items-center">
-                                        <img src={Square} alt="square" />
-                                    </div>
-                                    Журнал
-                                </div>
-                            </NavLink>
+                            {/*<NavLink onClick={changeMenu.bind(null, false)} to={`${url}/student`} className={funcActive}>*/}
+                            {/*    <div className={`${styles.link}  mt-2 flex color-light gap-3`}>*/}
+                            {/*        <div*/}
+                            {/*            style={{ width: '25px' }}*/}
+                            {/*            className="flex justify-content-center align-items-center"*/}
+                            {/*        >*/}
+                            {/*            <img src={Square} alt="square" />*/}
+                            {/*        </div>*/}
+                            {/*        Журнал*/}
+                            {/*    </div>*/}
+                            {/*</NavLink>*/}
                             <NavLink
                                 onClick={changeMenu.bind(null, false)}
-                                to="/pay"
+                                to={`${url}/payment`}
                                 className={({ isActive }) => (isActive ? styles.active_link : '')}>
                                 <div className={`${styles.link}  mt-2 flex color-light gap-3`}>
-                                    <div style={{ width: '25px' }} className="flex justify-content-center align-items-center">
+                                    <div
+                                        style={{ width: '25px' }}
+                                        className="flex justify-content-center align-items-center">
                                         <img src={Square} alt="square" />
                                     </div>
-                                    Оплата нб
+                                    Оплата
                                 </div>
                             </NavLink>
                         </>
                     ) : null}
-                    <div style={{ cursor: 'pointer' }} onClick={logout} className={`${styles.link}  mt-2 flex color-light gap-3`}>
+                    <div
+                        style={{ cursor: 'pointer' }}
+                        onClick={logout}
+                        className={`${styles.link}  mt-2 flex color-light gap-3`}>
                         <img src={Exit} alt="exit" />
                         Выход
                     </div>

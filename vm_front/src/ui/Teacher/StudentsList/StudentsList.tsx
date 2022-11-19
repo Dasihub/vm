@@ -31,7 +31,7 @@ const StudentsList: React.FC<IStudentsListProps> = ({ index, item, setStudent, g
         <tr>
             <td className="text-center">{index + 1}</td>
             <td style={{ paddingLeft: '10px' }}>{item.s_fio}</td>
-            <td className="text-center p-l-r-1" title="Выберите оценку">
+            <td style={{ width: '150px' }} className="text-center p-l-r-1" title="Выберите оценку">
                 <SelectCustom
                     value={valueOtsenko.value ? valueOtsenko : ''}
                     onFocus={setStudent.bind(null, item)}

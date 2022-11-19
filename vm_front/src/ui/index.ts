@@ -5,4 +5,5 @@ export { default as JournalStudent } from './Student/JournalStudent/JournalStude
 export { default as Dekanat } from './MainPage/Dekanat/Dekanat'
 export { default as SearchStudent } from './SearchStudent/SearchStudent'
 export { default as Teacher } from './Teacher/Teacher/Teacher'
+export { default as SearchStudentTeacher } from './SearchStudentTeacher/SearchStudentTeacher'
 // export { default as } from ''

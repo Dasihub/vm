@@ -6,11 +6,20 @@ import { amount, subGroup, typeGroup } from '../../../config/data'
 import { useHttp } from '../../../hooks/useHttp'
 import { useMessage } from '../../../hooks/useMessage'
 import { useTypeSelector } from '../../../hooks/useTypeSelector'
-import { IDiscipline, IGrade, ILoader, ISemester, IStudentList, ISubgroupStudent, ITeacherTabProps, IValueSelects } from './ITeacher'
+import {
+    IDiscipline,
+    ILoader,
+    ISemester,
+    IStudentList,
+    ISubgroupStudent,
+    ITeacherTabProps,
+    IValueSelects
+} from './ITeacher'
 import { valueType } from '../../../components/SelectCustom/ISelect'
 import dayjs from 'dayjs'
 import { IRes } from '../../../models/IModels'
 import styles from './style.module.scss'
+import { IGrade } from '../../../models/IGrade'
 
 const Teacher: React.FC<ITeacherTabProps> = ({ toReport, groups, setGroups, setVidZanyatie, vidZanyatie }) => {
     const { request } = useHttp()
@@ -310,8 +319,17 @@ const Teacher: React.FC<ITeacherTabProps> = ({ toReport, groups, setGroups, setV
 
     const PostEveryoneWasPresent = async () => {
         const { v_type_group, v_sub_group } = valueSelects
-        const { timesCount, id_vid_zaniatiy, id_discipline, id_semesterOrWs, id_groupOrPorok, isVisited, visitDate, id_a_year, kredits } =
-            studentList[0]
+        const {
+            timesCount,
+            id_vid_zaniatiy,
+            id_discipline,
+            id_semesterOrWs,
+            id_groupOrPorok,
+            isVisited,
+            visitDate,
+            id_a_year,
+            kredits
+        } = studentList[0]
         const { message, type }: IRes = await request('/teacher/otsenka', 'POST', {
             id_teacher: id_user,
             id_discipline: id_discipline,
@@ -331,7 +349,11 @@ const Teacher: React.FC<ITeacherTabProps> = ({ toReport, groups, setGroups, setV
         getStudentList()
     }
 
-    const postSubGroupStudent = async (id_student: number | null, subgroup: number | string | null, studentSubgroup: null | number) => {
+    const postSubGroupStudent = async (
+        id_student: number | null,
+        subgroup: number | string | null,
+        studentSubgroup: null | number
+    ) => {
         const { v_group, v_year, v_vid_zanyatie, v_semester } = valueSelects
         const { message, type }: IRes = await request('/teacher/subgroup', 'POST', {
             year: v_year.value,
@@ -402,7 +424,12 @@ const Teacher: React.FC<ITeacherTabProps> = ({ toReport, groups, setGroups, setV
                                 </thead>
                                 <tbody>
                                     {subgroupStudents.map((item, index) => (
-                                        <RenderSubGroup key={item.id_student} item={item} index={index} postSubGroupStudent={postSubGroupStudent} />
+                                        <RenderSubGroup
+                                            key={item.id_student}
+                                            item={item}
+                                            index={index}
+                                            postSubGroupStudent={postSubGroupStudent}
+                                        />
                                     ))}
                                 </tbody>
                             </table>
@@ -536,8 +563,14 @@ const Teacher: React.FC<ITeacherTabProps> = ({ toReport, groups, setGroups, setV
                     ) : null}
                 </div>
                 <div className="mt-2 flex gap-2 flex-wrap">
-                    {v_type_group.value == 1 && <Button onClick={showModal} value="Сформировать" disabled={!(v_type_group.value == 1)} />}
-                    <Button onClick={PostEveryoneWasPresent} value="Все присутствовали" disabled={!studentList.length} />
+                    {v_type_group.value == 1 && (
+                        <Button onClick={showModal} value="Сформировать" disabled={!(v_type_group.value == 1)} />
+                    )}
+                    <Button
+                        onClick={PostEveryoneWasPresent}
+                        value="Все присутствовали"
+                        disabled={!studentList.length}
+                    />
                     <Button
                         value="Отчет журнала"
                         disabled={!studentList.length}

@@ -45,7 +45,7 @@ const Header: React.FC<IHeaderProps> = ({ changeMenu, isNavigation }) => {
                     </div>
                 )}
             </div>
-            <h2 className={styles.title}>{t('app')}</h2>
+            <h2 className={styles.title}>ЖУРНАЛ ПОСЕЩЕНИЯ</h2>
             <div className="w-100" style={{ textAlign: 'right' }}>
                 <div
                     // onMouseOver={setIsSelect.bind(null, true)}

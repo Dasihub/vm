@@ -38,3 +38,5 @@ export const teacherDataTab: typeTab[] = [
     { title: 'Преподователь', id: 1 },
     { title: 'Поиск студентов', id: 2 }
 ]
+
+export const isScreen = document.body.offsetWidth > 1000

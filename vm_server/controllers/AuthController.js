@@ -86,14 +86,14 @@ class AuthController {
             if (IsAuthenticated) {
                 const user = await COOKIE.GET_USER(req);
 
-                return res.status(200).json({
+                return res.status(202).json({
                     message: req.t('welcome'),
                     type: 'info',
                     data: user,
                     auth: true,
                 });
             }
-            res.status(401).json({
+            res.status(200).json({
                 message: req.t('enterLogin'),
                 type: 'warn',
                 data: {},

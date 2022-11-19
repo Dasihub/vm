@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react'
 import { Tabs } from '../../components'
-import { SearchStudent, Teacher } from '../../ui'
+import { SearchStudentTeacher, Teacher } from '../../ui'
 import { JournalReport } from '../../reportPages'
 import styles from '../MainPage/styles.module.scss'
 import { teacherDataTab } from '../../config/data'
@@ -9,6 +9,7 @@ import { authSlice } from '../../redux/reducers/AuthSlice'
 import { useDispatch } from 'react-redux'
 import { IDiscipline, IGroups, IVidZanyatie } from '../../ui/Teacher/Teacher/ITeacher'
 import { IDataForJournal } from './ITeacher'
+import { id_role_teacher } from '../../config/roles'
 
 const TeacherPage: React.FC = () => {
     const dispatch = useDispatch()
@@ -34,14 +35,22 @@ const TeacherPage: React.FC = () => {
 
     const isUi = (): ReactElement => {
         if (isPage == 1) {
-            return <Teacher toReport={toReport} vidZanyatie={vidZanyatie} setVidZanyatie={setVidZanyatie} groups={groups} setGroups={setGroups} />
+            return (
+                <Teacher
+                    toReport={toReport}
+                    vidZanyatie={vidZanyatie}
+                    setVidZanyatie={setVidZanyatie}
+                    groups={groups}
+                    setGroups={setGroups}
+                />
+            )
         }
 
-        return <SearchStudent />
+        return <SearchStudentTeacher />
     }
 
     React.useEffect(() => {
-        if (id_role != 1) {
+        if (id_role != id_role_teacher) {
             dispatch(role1())
         }
     }, [])

@@ -66,3 +66,18 @@
         align-items: center;
     }
 }
+
+@media (max-width: 1700px) {
+    .table {
+
+        thead {
+
+            tr {
+
+                th {
+                    padding: 26px 5px;
+                }
+            }
+        }
+    }
+}

@@ -9,7 +9,8 @@ const Tabs: React.FC<ITabsProps> = ({ data, changePage, isPage }) => {
                 <div
                     onClick={changePage.bind(null, item.id)}
                     key={item.id}
-                    className={isPage == item.id ? `${styles.tab} ${styles.active_tab}` : styles.tab}>
+                    className={isPage == item.id ? `${styles.tab} ${styles.active_tab}` : styles.tab}
+                >
                     {item.title}
                 </div>
             ))}

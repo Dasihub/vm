@@ -38,13 +38,12 @@ const JournalReport: React.FC<IJournalReportProps> = ({
     const [alert, setAlert] = React.useState<boolean>(false)
     const [oneDate, setOneDate] = React.useState<string>('')
 
-    console.log(report, 'report')
-
     const journalGrouped = useGroupBy(journal, 'dates')
 
     const deleteGrade = async () => {
         setAlert(false)
-        const { timesCount, id_discipline, id_semesterOrWs, id_vid_zaniatiy, credits, visitDate }: IReportJournal = journalGrouped[oneDate][0]
+        const { timesCount, id_discipline, id_semesterOrWs, id_vid_zaniatiy, credits, visitDate }: IReportJournal =
+            journalGrouped[oneDate][0]
         const dateV = dayjs(visitDate).format('YYYY-MM-DD')
         const { data }: { data: { SMS_T_StudentJournalVisit_delete: string } } = await request(
             `/reports/journal/?id_teacher=${id_user}&id_discipline=${id_discipline}&credit=${credits}&visitDate=${dateV}&id_groupOrPorok=${idGroup}&id_year=${idYear}&id_ws=${idWs}&id_semesterOrWs=${id_semesterOrWs}&id_vid_zaniatiy=${id_vid_zaniatiy}&timesCount=${timesCount}`,
@@ -128,7 +127,8 @@ const JournalReport: React.FC<IJournalReportProps> = ({
                 if (resObject[names[i]][j]) {
                     resObject[names[i]][j].otsenka == 'н/б'
                         ? (nbSum += 1)
-                        : (ballSum += resObject[names[i]][j].otsenka == null ? 0 : parseInt(resObject[names[i]][j].otsenka))
+                        : (ballSum +=
+                              resObject[names[i]][j].otsenka == null ? 0 : parseInt(resObject[names[i]][j].otsenka))
                 }
             }
             // @ts-ignore
@@ -181,7 +181,11 @@ const JournalReport: React.FC<IJournalReportProps> = ({
         <>
             {alert && <Alert hide={setAlert.bind(null, false)} confirm={deleteGrade} />}
             <div className="m-l-r-2 flex align-items-center gap-1">
-                <i className="fa-solid fa-arrow-left-long color-primary" onClick={back} style={{ cursor: 'pointer', fontSize: '30px' }} />
+                <i
+                    className="fa-solid fa-arrow-left-long color-primary"
+                    onClick={back}
+                    style={{ cursor: 'pointer', fontSize: '30px' }}
+                />
                 {noData ? null : (
                     <>
                         <img onClick={exportToCSV} style={{ cursor: 'pointer', width: '40px' }} src={Exel} alt="exel" />
@@ -202,20 +206,26 @@ const JournalReport: React.FC<IJournalReportProps> = ({
                             </strong>
                         </div>
                         <div className="mt-1 m-l-r-2">
-                            Учебный год: <strong>{years.map(item => (item.id_a_year === idYear ? item.p32 : null))}</strong>
+                            Учебный год:{' '}
+                            <strong>{years.map(item => (item.id_a_year === idYear ? item.p32 : null))}</strong>
                         </div>
                         <div className="mt-1 m-l-r-2">
                             Полугодие/Семестр: <strong>{ws.map(item => (item.id_ws === idWs ? item.ws : null))}</strong>
                         </div>
                         <div className="mt-1 m-l-r-2">
-                            Факультет/Группа: <strong>{groups.map(item => (item.id_group === idGroup ? item.groups : null))}</strong>
+                            Факультет/Группа:{' '}
+                            <strong>{groups.map(item => (item.id_group === idGroup ? item.groups : null))}</strong>
                         </div>
                         <div className="mt-1 m-l-r-2">
                             Дисциплина: <strong>{discipline}</strong>
                         </div>
                         <div className="mt-1 m-l-r-2">
                             Вид занятий:{' '}
-                            <strong>{vidZanyatie.map(item => (item.id_vid_zaniatiy === idVidZanyatie ? item.name_vid_zaniatiy : null))}</strong>
+                            <strong>
+                                {vidZanyatie.map(item =>
+                                    item.id_vid_zaniatiy === idVidZanyatie ? item.name_vid_zaniatiy : null
+                                )}
+                            </strong>
                         </div>
                         <div className="mt-4 m-l-r-2 overflow-auto">
                             <table className="table">
@@ -250,7 +260,10 @@ const JournalReport: React.FC<IJournalReportProps> = ({
                                                                     <th className="bg-color-primary" key={i}>
                                                                         {' '}
                                                                         <i
-                                                                            onClick={showAlert.bind(null, item[fieldNames])}
+                                                                            onClick={showAlert.bind(
+                                                                                null,
+                                                                                item[fieldNames]
+                                                                            )}
                                                                             style={{
                                                                                 color: 'white',
                                                                                 marginRight: '8px'

@@ -1,8 +1,10 @@
-const { Router } = require('express');
-const StudentsController = require('../controllers/DekanatController');
-const router = Router();
+const { Router } = require('express')
+const DekanatController = require('../controllers/DekanatController')
+const router = Router()
 
-router.get('/students', StudentsController.getStudents);
-router.get('/access/:id_avn_login', StudentsController.getAccess);
+router.get('/students', DekanatController.getStudents)
+router.get('/access/:id_avn_login', DekanatController.getAccess)
+router.get('/working', DekanatController.getWorking)
+router.put('/journal', DekanatController.journalUpdate)
 
-module.exports = router;
+module.exports = router

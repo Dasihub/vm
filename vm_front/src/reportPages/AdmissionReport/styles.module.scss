@@ -1,0 +1,52 @@
+.a4 {
+    position: relative;
+    background-color: white;
+    height: 297mm;
+    width: 210mm;
+    display: block;
+    margin: 20px auto 60px auto;
+    font-family: "Times New Roman", sans-serif;
+}
+
+.title {
+     margin: 20px 0 0 70px;
+     font-weight: bold;
+     font-size: 20px;
+ }
+
+.br {
+    border-bottom: 1px solid black;
+    width: 200px;
+}
+
+.print {
+    display: flex;
+    padding-left: 200px;
+    gap: 50px;
+
+    img {
+        cursor: pointer;
+        width: 40px;
+    }
+}
+
+@media print {
+    .a4 {
+        position: relative;
+        background-color: white;
+        margin: 0;
+        font-family: "Times New Roman", sans-serif;
+    }
+
+    .title {
+        margin: 20px 0 0 70px;
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    .date {
+        position: absolute;
+        bottom: 20px;
+        right: 30px;
+    }
+}

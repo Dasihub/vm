@@ -75,12 +75,6 @@ export interface ISubgroupStudent {
     subgroup: null | number
 }
 
-export interface IGrade {
-    id_otsenka: number
-    otsenka: string
-    otsenka_ball: number | null
-}
-
 export interface ILoader {
     discipline: boolean
     semester: boolean

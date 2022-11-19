@@ -2,11 +2,8 @@ import React from 'react'
 import styles from './style.module.scss'
 import { Button } from '../index'
 import { IPropsAlert } from './IAlert'
-import { useTranslation } from 'react-i18next'
 
 const Alert: React.FC<IPropsAlert> = ({ hide, confirm }) => {
-    const { t } = useTranslation()
-
     return (
         <div className={styles.container}>
             <div className="flex justify-content-between align-items-center">

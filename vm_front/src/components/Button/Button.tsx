@@ -3,7 +3,14 @@ import Loader from '../Loader/Loader'
 import { IButtonProps } from './IButton'
 import styles from './styles.module.scss'
 
-const Button: React.FC<IButtonProps> = ({ type, disabled, onClick, loader, value, className = 'bg-color-primary color-light' }) => {
+const Button: React.FC<IButtonProps> = ({
+    type,
+    disabled,
+    onClick,
+    loader,
+    value,
+    className = 'bg-color-primary color-light'
+}) => {
     return (
         <button
             type={type}

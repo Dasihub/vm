@@ -14,6 +14,9 @@ import { LangSlice } from './redux/reducers/LangSlice'
 import { IRes } from './models/IModels'
 import { fetchYear } from './redux/action/yearAction'
 import { fetchSw } from './redux/action/wsAction'
+import { access_dekanat } from './config/roles'
+import { AdmissionReport } from './reportPages'
+import { url } from './config/url'
 
 const App: React.FC = () => {
     const navigate = useNavigate()
@@ -41,7 +44,7 @@ const App: React.FC = () => {
             )
             // setAuth({ id_role: data.id_role, id_avn_user: data.id_avn_user, id_user: data.id_user, auth: true })
         }
-        navigate('/login')
+        navigate(`${url}/login`)
     }
 
     const logout = async () => {
@@ -55,8 +58,10 @@ const App: React.FC = () => {
     }
 
     const getAccessDekanat = async () => {
-        const { data }: { data: { perm: number; id_avn_user: number } } = await request(`/dekanat/access/${id_avn_user}`)
-        if (data?.perm == 1) {
+        const { data }: { data: { perm: number; id_avn_user: number } } = await request(
+            `${url}/dekanat/access/${id_avn_user}`
+        )
+        if (data?.perm == access_dekanat) {
             setAccess(data?.perm)
             dispatch(role3())
         }
@@ -91,7 +96,7 @@ const App: React.FC = () => {
     React.useEffect(() => {
         const pathname = window.location.pathname
         isLang()
-        if (pathname != '/token') {
+        if (pathname != `${url}/token`) {
             checkAuth()
         } else {
             setMainLoader(false)
@@ -112,9 +117,12 @@ const App: React.FC = () => {
 
     return (
         <>
+            {/*<AdmissionReport />*/}
             <ToastContainer />
             <Header changeMenu={changeMenu} isNavigation={isNavigation} />
-            {isAuth && <Navigation access={access} logout={logout} changeMenu={changeMenu} isNavigation={isNavigation} />}
+            {isAuth && (
+                <Navigation access={access} logout={logout} changeMenu={changeMenu} isNavigation={isNavigation} />
+            )}
             <Router access={access} />
         </>
     )

@@ -8,4 +8,5 @@ export { default as ModalWindow } from './ModalWindow/ModalWindow'
 export { default as FileComponent } from './FileComponent/FileComponent'
 export { default as Alert } from './Alert/Alert'
 export { default as Tabs } from './Tabs/Tabs'
+export { default as TextArea } from './TextArea/TextArea'
 // export { default as  } from '';

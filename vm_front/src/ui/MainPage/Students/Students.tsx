@@ -29,7 +29,11 @@ const Students: React.FC<IStudentsProps> = ({ students, showModal }) => {
                         {Object.keys(educGrouped)
                             .sort()
                             .map(idDiscipline => (
-                                <th className="th" rowSpan={1} colSpan={Object.keys(educGrouped[idDiscipline]).length} key={'disc' + idDiscipline}>
+                                <th
+                                    className="th"
+                                    rowSpan={1}
+                                    colSpan={Object.keys(educGrouped[idDiscipline]).length}
+                                    key={'disc' + idDiscipline}>
                                     {educGrouped[idDiscipline][Object.keys(educGrouped[idDiscipline])[0]][0].discipline}
                                     <div style={{ fontSize: '14px' }}>
                                         {educGrouped[idDiscipline][Object.keys(educGrouped[idDiscipline])[0]][0].t_fio}
@@ -43,12 +47,18 @@ const Students: React.FC<IStudentsProps> = ({ students, showModal }) => {
                             .map(idDiscipline => {
                                 return Object.keys(educGrouped[idDiscipline])
                                     .sort()
-                                    .map(idDate => (
-                                        <th rowSpan={1} colSpan={1} key={'date' + idDate}>
-                                            {educGrouped[idDiscipline][idDate][0].visitDate}
-                                            <div style={{ fontSize: '14px' }}>{educGrouped[idDiscipline][idDate][0].t_fio}</div>
-                                        </th>
-                                    ))
+                                    .map(idDate => {
+                                        if (idDate) {
+                                            return (
+                                                <th className="th" rowSpan={1} colSpan={1} key={'date' + idDate}>
+                                                    {educGrouped[idDiscipline][idDate][0].visitDate}
+                                                    <div style={{ fontSize: '14px' }}>
+                                                        {educGrouped[idDiscipline][idDate][0].t_fio}
+                                                    </div>
+                                                </th>
+                                            )
+                                        }
+                                    })
                             })}
                     </tr>
                 </thead>
@@ -70,11 +80,17 @@ const Students: React.FC<IStudentsProps> = ({ students, showModal }) => {
                                                         key={'date' + indexDate}
                                                         onClick={showModal}
                                                         className={
-                                                            educGrouped[idDiscipline][idDate].find((x: any) => x.s_fio == idStudent)?.id_otsenka == 6
+                                                            educGrouped[idDiscipline][idDate].find(
+                                                                (x: any) => x.s_fio == idStudent
+                                                            )?.id_otsenka == 6
                                                                 ? 'text-center bg-color-danger pointer color-light'
                                                                 : 'text-center'
                                                         }>
-                                                        {educGrouped[idDiscipline][idDate].find((x: any) => x.s_fio == idStudent)?.otsenka}
+                                                        {
+                                                            educGrouped[idDiscipline][idDate].find(
+                                                                (x: any) => x.s_fio == idStudent
+                                                            )?.otsenka
+                                                        }
                                                     </td>
                                                 ))
                                         })}

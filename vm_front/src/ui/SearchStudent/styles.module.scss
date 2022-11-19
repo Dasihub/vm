@@ -49,13 +49,38 @@
             }
         }
     }
+}
 
-    div {
-        padding: 7px 0;
-        //border-bottom: 1px solid #E3E8EF;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+.filter {
+    transition: 100ms;
+
+    &:hover {
+        transform: translateY(-3px);
+    }
+}
+
+.selects {
+    width: 250px
+}
+
+@media (max-width: 1700px) {
+    .table {
+
+        thead {
+
+            tr {
+
+                th {
+                    padding: 26px 5px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 1000px) {
+    .selects {
+        width: 100%
     }
 }
 

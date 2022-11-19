@@ -9,7 +9,10 @@ const RenderSubGroup: React.FC<IRenderSubGroupProps> = ({ index, postSubGroupStu
         value: null,
         label: ''
     })
-    const [student, setStudent] = React.useState<{ id_student: null | number; id_studentJournalVisit_subgroup: null | number }>({
+    const [student, setStudent] = React.useState<{
+        id_student: null | number
+        id_studentJournalVisit_subgroup: null | number
+    }>({
         id_student: null,
         id_studentJournalVisit_subgroup: null
     })
